@@ -1,8 +1,10 @@
 package com.insiderser.popularmovies
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import androidx.ui.tooling.preview.Preview
@@ -18,7 +20,10 @@ fun MainNavHost() {
         composable("movies") {
             MoviesScreen(onMovieClick = { movie -> navController.navigate("movies/${movie.id}") })
         }
-        composable("movies/{movieId}") { backStackEntry ->
+        composable(
+            "movies/{movieId}",
+            arguments = listOf(navArgument("movieId") { type = NavType.IntType })
+        ) { backStackEntry ->
             val movieId = requireNotNull(backStackEntry.arguments?.getInt("movieId"))
             MovieDetailsScreen(movieId = movieId)
         }
