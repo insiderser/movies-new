@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.ui.tooling.preview.Preview
+import com.insiderser.popularmovies.di.AppComponent
 import com.insiderser.popularmovies.model.Movie
 import dev.chrisbanes.accompanist.coil.CoilImage
 
@@ -23,7 +24,7 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 fun MoviesScreen(
     onMovieClick: (Movie) -> Unit
 ) {
-    val viewModel = viewModel<MoviesListViewModel>()
+    val viewModel = viewModel<MoviesListViewModel>(factory = AppComponent.get().viewModelFactory)
     val moviesList by viewModel.movies.collectAsState()
 
     Scaffold {
@@ -71,8 +72,22 @@ fun MovieItem(
 @Composable
 fun MoviesListPreview() {
     PopularMoviesTheme {
-        MoviesScreen(
-            onMovieClick = {}
+        MoviesList(
+            list = listOf(
+                Movie(
+                    id = 1,
+                    title = "Movie 1",
+                    description = "",
+                    imageUrl = "https://images.unsplash.com/photo-1528183087798-c83d848b0ecd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+                ),
+                Movie(
+                    id = 2,
+                    title = "Movie 2",
+                    description = "",
+                    imageUrl = "https://images.unsplash.com/photo-1528183087798-c83d848b0ecd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+                )
+            ),
+            onItemClick = {}
         )
     }
 }
