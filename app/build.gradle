@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId 'com.insiderser.popularmovies'
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName '1.0'
@@ -76,6 +76,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0-beta01'
 
     implementation 'io.coil-kt:coil:1.0.0'
+
+    implementation "dev.chrisbanes:insetter-ktx:0.3.1"
 
     implementation 'androidx.room:room-runtime:2.3.0-alpha03'
     implementation "androidx.room:room-ktx:2.3.0-alpha03"

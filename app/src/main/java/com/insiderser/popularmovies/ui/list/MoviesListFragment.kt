@@ -13,6 +13,7 @@ import com.insiderser.popularmovies.ui.common.FooterLoadStateAdapter
 import com.insiderser.popularmovies.util.observe
 import com.insiderser.popularmovies.util.viewLifecycleScoped
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 
 @AndroidEntryPoint
 class MoviesListFragment : Fragment() {
@@ -39,6 +40,8 @@ class MoviesListFragment : Fragment() {
 
         postponeEnterTransition()
         binding.moviesList.doOnPreDraw { startPostponedEnterTransition() }
+
+        binding.moviesList.applySystemWindowInsetsToPadding(top = true, bottom = true)
 
         binding.moviesList.adapter = moviesAdapter.withLoadStateFooter(
             FooterLoadStateAdapter(
