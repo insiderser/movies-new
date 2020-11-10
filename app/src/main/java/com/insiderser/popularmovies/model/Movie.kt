@@ -1,8 +1,26 @@
 package com.insiderser.popularmovies.model
 
+import androidx.annotation.FloatRange
+import androidx.recyclerview.widget.DiffUtil
+
 data class Movie(
     val id: Int,
     val title: String,
-    val description: String,
-    val imageUrl: String,
-)
+    val overview: String?,
+    val posterPath: String?,
+    val backdropPath: String?,
+    @FloatRange(from = 0.0, to = 10.0) val voteAverage: Float,
+) {
+    init {
+        require(voteAverage in 0f..10f)
+    }
+}
+
+object MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
+
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+        oldItem == newItem
+}
