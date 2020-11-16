@@ -9,7 +9,7 @@ import com.insiderser.popularmovies.db.AppDatabase
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
 import com.insiderser.popularmovies.db.entity.PopularMoviesListEntity
-import com.insiderser.popularmovies.mapper.TmdbMovieToMovieEntityMapper
+import com.insiderser.popularmovies.mapper.toMovieEntity
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
 import com.insiderser.popularmovies.rest.tmdb.TmdbConfig
@@ -22,7 +22,6 @@ class MoviesRemoteMediator @Inject constructor(
     private val moviesDao: MoviesDao,
     private val popularMoviesListDao: PopularMoviesListDao,
     private val moviesService: MoviesService,
-    private val tmdbMovieToMovieEntityMapper: TmdbMovieToMovieEntityMapper
 ) : RemoteMediator<Int, Movie>() {
 
     override suspend fun load(
@@ -49,7 +48,7 @@ class MoviesRemoteMediator @Inject constructor(
             return MediatorResult.Error(e)
         }
 
-        val entities = loadedMovies.results.map { tmdbMovieToMovieEntityMapper.map(it) }
+        val entities = loadedMovies.results.map { it.toMovieEntity() }
         val entitiesByPosition = entities.mapIndexed { index, movieEntity ->
             PopularMoviesListEntity(
                 position = positionToLoad + index,
@@ -66,7 +65,9 @@ class MoviesRemoteMediator @Inject constructor(
             popularMoviesListDao.insertAll(entitiesByPosition)
         }
 
-        return MediatorResult.Success(endOfPaginationReached = pageToLoad == loadedMovies.total_pages)
+        return MediatorResult.Success(
+            endOfPaginationReached = pageToLoad == loadedMovies.total_pages
+        )
     }
 
     private fun getPageForPosition(position: Int): Int = position / TmdbConfig.PAGE_SIZE + 1

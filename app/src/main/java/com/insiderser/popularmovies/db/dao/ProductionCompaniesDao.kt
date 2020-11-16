@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.insiderser.popularmovies.db.entity.MovieProductionCompanyEntity
 import com.insiderser.popularmovies.db.entity.ProductionCompanyEntity
 import com.insiderser.popularmovies.model.ProductionCompany
 import kotlinx.coroutines.flow.Flow
@@ -22,5 +23,8 @@ interface ProductionCompaniesDao {
     fun findProductionCompaniesByMovieId(movieId: Int): Flow<List<ProductionCompany>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(genres: List<ProductionCompanyEntity>)
+    suspend fun insertAll(productionCompanies: List<ProductionCompanyEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllMovieProductionCompanies(productionCompanies: List<MovieProductionCompanyEntity>)
 }

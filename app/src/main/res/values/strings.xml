@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_unknown">Unknown error</string>
+    <string name="retry">Retry</string>
+    <string name="failed_to_load">Failed to load.</string>
+    <string name="poster_of_the_movie">Poster of the movie</string>
+    <string name="transition_movie_details">transition_movie_details</string>
+    <string name="transition_list_movies_item">movie_list_%s</string>
 </resources>

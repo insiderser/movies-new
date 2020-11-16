@@ -22,6 +22,8 @@
 
 package com.insiderser.popularmovies.util
 
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -40,6 +42,8 @@ private class ViewLifecycleScopedProperty<T : Any>(owner: Fragment) :
 
     private var value: T? = null
 
+    private val handler = Handler(Looper.getMainLooper())
+
     init {
         owner.viewLifecycleOwnerLiveData
             .observeForever { viewLifecycleOwner ->
@@ -48,7 +52,7 @@ private class ViewLifecycleScopedProperty<T : Any>(owner: Fragment) :
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
-        value = null
+        handler.post { value = null }
     }
 
     override fun getValue(thisRef: Any, property: KProperty<*>): T =
