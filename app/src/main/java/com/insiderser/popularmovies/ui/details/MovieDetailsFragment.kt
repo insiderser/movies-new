@@ -16,6 +16,7 @@ import com.insiderser.popularmovies.databinding.FragmentMovieDetailsBinding
 import com.insiderser.popularmovies.model.Genre
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.model.MovieDetails
+import com.insiderser.popularmovies.model.ProductionCompany
 import com.insiderser.popularmovies.util.format
 import com.insiderser.popularmovies.util.observe
 import com.insiderser.popularmovies.util.viewLifecycleScoped
@@ -28,6 +29,7 @@ class MovieDetailsFragment : Fragment() {
     private var binding: FragmentMovieDetailsBinding by viewLifecycleScoped()
 
     private val genresAdapter = GenresAdapter()
+    private val productionCompaniesAdapter = ProductionCompaniesAdapter()
 
     private val viewModel: MovieDetailsViewModel by viewModels()
 
@@ -57,6 +59,9 @@ class MovieDetailsFragment : Fragment() {
         binding.hero.genresList.adapter = genresAdapter
         binding.hero.genresList.layoutManager = FlexboxLayoutManager(requireContext())
 
+        binding.productionCompaniesList.adapter = productionCompaniesAdapter
+        binding.productionCompaniesList.layoutManager = FlexboxLayoutManager(requireContext())
+
         viewModel.init(navArgs.movieId)
 
         viewModel.movieDetails.observe(viewLifecycleOwner, ::bindMovieDetails)
@@ -65,6 +70,7 @@ class MovieDetailsFragment : Fragment() {
     private fun bindMovieDetails(movieDetails: MovieDetails) {
         bindMovie(movieDetails.movie)
         bindGenres(movieDetails.genres)
+        bindProductionCompanies(movieDetails.productionCompanies)
     }
 
     private fun bindMovie(movie: Movie) = with(binding) {
@@ -83,8 +89,13 @@ class MovieDetailsFragment : Fragment() {
         genresAdapter.submitList(genres)
     }
 
+    private fun bindProductionCompanies(productionCompanies: List<ProductionCompany>) {
+        productionCompaniesAdapter.submitList(productionCompanies)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.hero.genresList.adapter = null
+        binding.productionCompaniesList.adapter = null
     }
 }

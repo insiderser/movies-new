@@ -17,7 +17,7 @@ interface ProductionCompaniesDao {
         SELECT productionCompanies.*
         FROM productionCompanies
                  JOIN movieProductionCompanies MPC ON productionCompanies.id = MPC.productionCompanyId
-        WHERE movieId = :movieId
+        WHERE movieId = :movieId AND logoPath IS NOT NULL
     """
     )
     fun findProductionCompaniesByMovieId(movieId: Int): Flow<List<ProductionCompany>>
