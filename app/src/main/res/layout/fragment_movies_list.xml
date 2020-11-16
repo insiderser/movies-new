@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionGroup="true"
+        android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="@integer/movies_list_span_count"
         tools:listitem="@layout/item_movie" />
