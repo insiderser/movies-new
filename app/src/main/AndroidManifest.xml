@@ -35,6 +35,10 @@
             <meta-data
                 android:name="com.insiderser.popularmovies.init.TimberInitializer"
                 android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.insiderser.popularmovies.init.CoilInitializer"
+                android:value="androidx.startup" />
         </provider>
     </application>
 
