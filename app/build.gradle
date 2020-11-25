@@ -75,7 +75,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0-beta01'
 
-    implementation 'io.coil-kt:coil:1.0.0'
+    implementation 'io.coil-kt:coil:1.1.0'
 
     implementation "dev.chrisbanes:insetter-ktx:0.3.1"
 
