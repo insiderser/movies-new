@@ -17,6 +17,7 @@ import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.FragmentMoviesListBinding
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.ui.common.FooterLoadStateAdapter
+import com.insiderser.popularmovies.util.applySystemWindowInsetsToProgressOffset
 import com.insiderser.popularmovies.util.getMessageForUser
 import com.insiderser.popularmovies.util.observe
 import com.insiderser.popularmovies.util.toPopularMoviesException

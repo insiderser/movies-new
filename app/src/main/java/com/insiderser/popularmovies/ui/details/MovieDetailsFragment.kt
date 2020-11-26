@@ -60,7 +60,6 @@ class MovieDetailsFragment : Fragment() {
         binding.hero.genresList.layoutManager = FlexboxLayoutManager(requireContext())
 
         binding.productionCompaniesList.adapter = productionCompaniesAdapter
-        binding.productionCompaniesList.layoutManager = FlexboxLayoutManager(requireContext())
 
         viewModel.init(navArgs.movieId)
 

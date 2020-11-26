@@ -25,8 +25,6 @@ class MoviesListViewHolder(
 
         image.load(movie?.posterPath) {
             crossfade(true)
-            // Android crashes on Android O+ devices because shared element transitions are not hardware-accelerated.
-            allowHardware(false)
         }
 
         image.transitionName = root.context.getString(
