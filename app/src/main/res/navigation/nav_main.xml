@@ -9,4 +9,15 @@
         android:id="@+id/moviesListFragment"
         android:name="com.insiderser.popularmovies.ui.list.MoviesListFragment"
         tools:layout="@layout/fragment_movies_list" />
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.insiderser.popularmovies.ui.details.MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
+    <action
+        android:id="@+id/to_movieDetailsFragment"
+        app:destination="@id/movieDetailsFragment" />
 </navigation>
