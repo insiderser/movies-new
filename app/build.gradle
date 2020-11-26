@@ -32,8 +32,7 @@ android {
         }
 
         buildConfigField "String", "TMDB_REST_URL", "\"https://api.themoviedb.org/\""
-        // TODO: don't hardcode image size. w500 is not available for backdrop paths.
-        buildConfigField "String", "TMDB_IMAGES_URL", "\"https://image.tmdb.org/t/p/w500\""
+        buildConfigField "String", "TMDB_BASE_IMAGES_URL", "\"https://image.tmdb.org/t/p/\""
         buildConfigField "String", "TMDB_API_KEY", "\"${localProperties['tmdbApiKey']}\""
     }
 
@@ -61,7 +60,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.0-alpha02'
     implementation "androidx.constraintlayout:constraintlayout:2.0.4"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    // DO NOT UPGRADE TO paging 3.0.0-alpha08!!!
+    // DO NOT UPGRADE TO paging 3.0.0-alpha08/alpha09!!!
     implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha07'
 
     implementation 'androidx.activity:activity-ktx:1.2.0-beta01'

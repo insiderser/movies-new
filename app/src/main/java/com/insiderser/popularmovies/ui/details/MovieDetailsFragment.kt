@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
 import com.insiderser.popularmovies.R
@@ -18,6 +17,7 @@ import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.model.MovieDetails
 import com.insiderser.popularmovies.model.ProductionCompany
 import com.insiderser.popularmovies.util.format
+import com.insiderser.popularmovies.util.loadPoster
 import com.insiderser.popularmovies.util.observe
 import com.insiderser.popularmovies.util.viewLifecycleScoped
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,7 +73,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun bindMovie(movie: Movie) = with(binding) {
-        hero.posterImage.load(movie.posterPath) {
+        hero.posterImage.loadPoster(movie.posterPath) {
             listener(
                 onSuccess = { _, _ -> startPostponedEnterTransition() },
                 onError = { _, _ -> startPostponedEnterTransition() },
