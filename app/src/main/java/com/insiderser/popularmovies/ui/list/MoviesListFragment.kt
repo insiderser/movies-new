@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.insiderser.popularmovies.databinding.FragmentMoviesListBinding
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.ui.common.FooterLoadStateAdapter
+import com.insiderser.popularmovies.util.applySystemWindowInsetsToProgressOffset
 import com.insiderser.popularmovies.util.observe
 import com.insiderser.popularmovies.util.viewLifecycleScoped
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +42,7 @@ class MoviesListFragment : Fragment() {
         postponeEnterTransition()
         binding.moviesList.doOnPreDraw { startPostponedEnterTransition() }
 
+        binding.swipeRefreshLayout.applySystemWindowInsetsToProgressOffset()
         binding.moviesList.applySystemWindowInsetsToPadding(top = true, bottom = true)
 
         binding.moviesList.adapter = moviesAdapter.withLoadStateFooter(
