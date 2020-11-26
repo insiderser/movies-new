@@ -1,10 +1,10 @@
 package com.insiderser.popularmovies.ui.list
 
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.ItemMovieBinding
 import com.insiderser.popularmovies.model.Movie
+import com.insiderser.popularmovies.util.loadPoster
 
 class MoviesListViewHolder(
     private val binding: ItemMovieBinding,
@@ -23,7 +23,7 @@ class MoviesListViewHolder(
         currentMovie = movie
         image.contentDescription = movie?.title
 
-        image.load(movie?.posterPath) {
+        image.loadPoster(movie?.posterPath) {
             crossfade(true)
         }
 
