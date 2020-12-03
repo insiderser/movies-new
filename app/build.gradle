@@ -63,7 +63,7 @@ dependencies {
     // DO NOT UPGRADE TO paging 3.0.0-alpha08/alpha09!!!
     implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha07'
 
-    implementation 'androidx.activity:activity-ktx:1.2.0-beta01'
+    implementation 'androidx.activity:activity-ktx:1.2.0-beta02'
     implementation 'androidx.fragment:fragment-ktx:1.3.0-beta01'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
