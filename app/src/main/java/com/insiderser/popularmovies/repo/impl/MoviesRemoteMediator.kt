@@ -17,6 +17,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MoviesRemoteMediator @Inject constructor(
+    private val db: AppDatabase,
     private val moviesDao: MoviesDao,
     private val popularMoviesListDao: PopularMoviesListDao,
     private val moviesService: MoviesService,
@@ -59,12 +60,14 @@ class MoviesRemoteMediator @Inject constructor(
             )
         }
 
-        if (loadType == LoadType.REFRESH) {
-            popularMoviesListDao.deleteAll()
-        }
+        db.withTransaction {
+            if (loadType == LoadType.REFRESH) {
+                popularMoviesListDao.deleteAll()
+            }
 
-        moviesDao.insertAll(entities)
-        popularMoviesListDao.insertAll(entitiesByPosition)
+            moviesDao.insertAll(entities)
+            popularMoviesListDao.insertAll(entitiesByPosition)
+        }
 
         return MediatorResult.Success(
             endOfPaginationReached = false
