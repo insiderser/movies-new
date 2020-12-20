@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class TmdbMovieDetails(
     val adult: Boolean,
     val backdrop_path: String?,
-    val budget: Int,
+    val budget: Long,
     val genres: List<TmdbGenre>,
     val homepage: String?,
     val id: Int,
@@ -18,7 +18,7 @@ data class TmdbMovieDetails(
     val poster_path: String?,
     val production_companies: List<TmdbProductionCompany>,
     val production_countries: List<TmdbProductionCountry>,
-    val revenue: Int,
+    val revenue: Long,
     val runtime: Int?,
     val status: TmdbMovieStatus,
     val tagline: String?,
