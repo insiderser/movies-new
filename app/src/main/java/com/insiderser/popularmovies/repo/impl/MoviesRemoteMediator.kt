@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator @Inject constructor(
-    private val db: AppDatabase,
     private val moviesDao: MoviesDao,
     private val popularMoviesListDao: PopularMoviesListDao,
     private val moviesService: MoviesService,
@@ -60,14 +59,12 @@ class MoviesRemoteMediator @Inject constructor(
             )
         }
 
-        db.withTransaction {
-            if (loadType == LoadType.REFRESH) {
-                popularMoviesListDao.deleteAll()
-            }
-
-            moviesDao.insertAll(entities)
-            popularMoviesListDao.insertAll(entitiesByPosition)
+        if (loadType == LoadType.REFRESH) {
+            popularMoviesListDao.deleteAll()
         }
+
+        moviesDao.insertAll(entities)
+        popularMoviesListDao.insertAll(entitiesByPosition)
 
         return MediatorResult.Success(
             endOfPaginationReached = false
