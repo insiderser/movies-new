@@ -4,8 +4,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import androidx.room.withTransaction
-import com.insiderser.popularmovies.db.AppDatabase
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
 import com.insiderser.popularmovies.db.entity.PopularMoviesListEntity
@@ -13,6 +11,7 @@ import com.insiderser.popularmovies.mapper.toMovieEntity
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
 import com.insiderser.popularmovies.rest.tmdb.TmdbConfig
+import retrofit2.HttpException
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -45,6 +44,11 @@ class MoviesRemoteMediator @Inject constructor(
             moviesService.getPopularMovies(page = pageToLoad)
         } catch (e: Exception) {
             Timber.e(e)
+
+            if (e is HttpException && e.code() == TmdbConfig.PAGE_OUT_OF_RANGE_CODE) {
+                return MediatorResult.Success(endOfPaginationReached = true)
+            }
+
             return MediatorResult.Error(e)
         }
 
@@ -66,7 +70,7 @@ class MoviesRemoteMediator @Inject constructor(
         }
 
         return MediatorResult.Success(
-            endOfPaginationReached = pageToLoad == loadedMovies.total_pages
+            endOfPaginationReached = false
         )
     }
 
