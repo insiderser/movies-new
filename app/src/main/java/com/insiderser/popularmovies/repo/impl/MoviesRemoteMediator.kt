@@ -1,9 +1,10 @@
 package com.insiderser.popularmovies.repo.impl
 
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
+import androidx.room.withTransaction
+import com.insiderser.popularmovies.db.AppDatabase
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
 import com.insiderser.popularmovies.db.entity.PopularMoviesListEntity
@@ -15,7 +16,6 @@ import retrofit2.HttpException
 import timber.log.Timber
 import javax.inject.Inject
 
-@OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator @Inject constructor(
     private val moviesDao: MoviesDao,
     private val popularMoviesListDao: PopularMoviesListDao,

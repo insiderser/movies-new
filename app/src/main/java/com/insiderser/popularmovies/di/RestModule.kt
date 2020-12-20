@@ -36,7 +36,7 @@ object RestModule {
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val logger = HttpLoggingInterceptor.Logger { message -> Timber.tag("OkHttp").d(message) }
         return HttpLoggingInterceptor(logger).apply {
-            level = HttpLoggingInterceptor.Level.BASIC
+            level = HttpLoggingInterceptor.Level.BODY
         }
     }
 
