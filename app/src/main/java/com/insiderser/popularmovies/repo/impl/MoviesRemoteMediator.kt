@@ -7,9 +7,9 @@ import androidx.room.withTransaction
 import com.insiderser.popularmovies.db.AppDatabase
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
-import com.insiderser.popularmovies.db.entity.PopularMoviesListEntity
-import com.insiderser.popularmovies.mapper.toMovieEntity
-import com.insiderser.popularmovies.model.Movie
+import com.insiderser.popularmovies.db.entity.MovieEntity
+import com.insiderser.popularmovies.mapper.popularListEntityMapper
+import com.insiderser.popularmovies.mapper.tmdbMovieToMovieEntityMapper
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
 import com.insiderser.popularmovies.rest.tmdb.TmdbConfig
 import retrofit2.HttpException
@@ -21,11 +21,11 @@ class MoviesRemoteMediator @Inject constructor(
     private val moviesDao: MoviesDao,
     private val popularMoviesListDao: PopularMoviesListDao,
     private val moviesService: MoviesService,
-) : RemoteMediator<Int, Movie>() {
+) : RemoteMediator<Int, MovieEntity>() {
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Movie>
+        state: PagingState<Int, MovieEntity>
     ): MediatorResult {
         val positionToLoad = when (loadType) {
             LoadType.REFRESH -> 0
@@ -52,13 +52,8 @@ class MoviesRemoteMediator @Inject constructor(
             return MediatorResult.Error(e)
         }
 
-        val entities = loadedMovies.results.map { it.toMovieEntity() }
-        val entitiesByPosition = entities.mapIndexed { index, movieEntity ->
-            PopularMoviesListEntity(
-                position = positionToLoad + index,
-                movieId = movieEntity.id
-            )
-        }
+        val entities = loadedMovies.results.map(tmdbMovieToMovieEntityMapper)
+        val entitiesByPosition = popularListEntityMapper(positionToLoad).invoke(entities)
 
         db.withTransaction {
             if (loadType == LoadType.REFRESH) {

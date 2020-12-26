@@ -15,7 +15,7 @@ import com.google.android.material.transition.MaterialElevationScale
 import com.insiderser.popularmovies.NavMainDirections
 import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.FragmentMoviesListBinding
-import com.insiderser.popularmovies.model.Movie
+import com.insiderser.popularmovies.model.MoviePoster
 import com.insiderser.popularmovies.ui.common.FooterLoadStateAdapter
 import com.insiderser.popularmovies.util.applySystemWindowInsetsToProgressOffset
 import com.insiderser.popularmovies.util.getMessageForUser
@@ -42,7 +42,7 @@ class MoviesListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = FragmentMoviesListBinding.inflate(inflater)
+    ): View = FragmentMoviesListBinding.inflate(inflater)
         .also { binding = it }
         .root
 
@@ -88,7 +88,7 @@ class MoviesListFragment : Fragment() {
         }
     }
 
-    private fun navigateToMovieDetails(movie: Movie, view: View) {
+    private fun navigateToMovieDetails(movie: MoviePoster, view: View) {
         exitTransition = MaterialElevationScale(false).apply {
             duration = resources.getInteger(R.integer.animation_duration_long).toLong()
         }

@@ -5,8 +5,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import com.insiderser.popularmovies.db.entity.MovieEntity
 import com.insiderser.popularmovies.db.entity.PopularMoviesListEntity
-import com.insiderser.popularmovies.model.Movie
 
 @Dao
 interface PopularMoviesListDao {
@@ -19,7 +19,7 @@ interface PopularMoviesListDao {
         ORDER BY position
     """
     )
-    fun findAllMovies(): PagingSource<Int, Movie>
+    fun findAllMovies(): PagingSource<Int, MovieEntity>
 
     @Query("SELECT MIN(position) FROM popularMoviesList")
     suspend fun getFirstInsertedPosition(): Int?

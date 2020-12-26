@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.insiderser.popularmovies.databinding.ItemMovieBinding
-import com.insiderser.popularmovies.model.Movie
-import com.insiderser.popularmovies.model.MovieDiffCallback
+import com.insiderser.popularmovies.model.MoviePoster
+import com.insiderser.popularmovies.model.MoviePosterDiffCallback
 
 class MoviesListAdapter(
     private val onItemClick: OnMovieItemClickListener
-) : PagingDataAdapter<Movie, MoviesListViewHolder>(MovieDiffCallback) {
+) : PagingDataAdapter<MoviePoster, MoviesListViewHolder>(MoviePosterDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
         val inflater = LayoutInflater.from(parent.context)

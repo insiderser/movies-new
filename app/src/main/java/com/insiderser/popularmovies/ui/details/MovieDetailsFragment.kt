@@ -14,7 +14,6 @@ import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.FragmentMovieDetailsBinding
 import com.insiderser.popularmovies.model.Genre
 import com.insiderser.popularmovies.model.Movie
-import com.insiderser.popularmovies.model.MovieDetails
 import com.insiderser.popularmovies.model.ProductionCompany
 import com.insiderser.popularmovies.util.format
 import com.insiderser.popularmovies.util.loadPoster
@@ -39,7 +38,7 @@ class MovieDetailsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = FragmentMovieDetailsBinding.inflate(inflater)
+    ): View = FragmentMovieDetailsBinding.inflate(inflater)
         .also { binding = it }
         .root
 
@@ -63,13 +62,7 @@ class MovieDetailsFragment : Fragment() {
 
         viewModel.init(navArgs.movieId)
 
-        viewModel.movieDetails.observe(viewLifecycleOwner, ::bindMovieDetails)
-    }
-
-    private fun bindMovieDetails(movieDetails: MovieDetails) {
-        bindMovie(movieDetails.movie)
-        bindGenres(movieDetails.genres)
-        bindProductionCompanies(movieDetails.productionCompanies)
+        viewModel.movieDetails.observe(viewLifecycleOwner) { bindMovie(it) }
     }
 
     private fun bindMovie(movie: Movie) = with(binding) {
@@ -82,6 +75,9 @@ class MovieDetailsFragment : Fragment() {
         }
         hero.title.text = movie.title
         hero.rating.text = movie.voteAverage.toDouble().format()
+
+        bindGenres(movie.genres)
+        bindProductionCompanies(movie.productionCompanies)
     }
 
     private fun bindGenres(genres: List<Genre>) {
