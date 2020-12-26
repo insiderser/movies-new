@@ -16,8 +16,19 @@
         <argument
             android:name="movieId"
             app:argType="integer" />
+        <action
+            android:id="@+id/to_reviewsFragment"
+            app:destination="@id/reviewsFragment" />
     </fragment>
     <action
         android:id="@+id/to_movieDetailsFragment"
         app:destination="@id/movieDetailsFragment" />
+    <fragment
+        android:id="@+id/reviewsFragment"
+        android:name="com.insiderser.popularmovies.ui.reviews.ReviewsFragment"
+        tools:layout="@layout/fragment_reviews">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -1,9 +1,9 @@
-package com.insiderser.popularmovies.ui.details
+package com.insiderser.popularmovies.ui.reviews
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.insiderser.popularmovies.repo.MovieDetailsRepository
+import com.insiderser.popularmovies.repo.ReviewsRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -11,21 +11,21 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 
-class MovieDetailsViewModel @ViewModelInject constructor(
-    private val movieDetailsRepository: MovieDetailsRepository
+class ReviewsViewModel @ViewModelInject constructor(
+    private val reviewsRepository: ReviewsRepository
 ) : ViewModel() {
 
-    private val movieIdFlow = MutableSharedFlow<Int>(replay = 1)
+    private val currentMovieIdFlow = MutableSharedFlow<Int>(replay = 1)
 
-    val movieDetails = movieIdFlow
+    val reviews = currentMovieIdFlow
         .distinctUntilChanged()
-        .flatMapLatest { movieDetailsRepository.getMovieDetails(it) }
+        .flatMapLatest { movieId -> reviewsRepository.getReviews(movieId) }
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
     fun init(movieId: Int) {
         viewModelScope.launch {
-            movieIdFlow.emit(movieId)
-            movieDetailsRepository.loadMovieDetails(movieId)
+            currentMovieIdFlow.emit(movieId)
+            reviewsRepository.fetchReviews(movieId)
         }
     }
 }

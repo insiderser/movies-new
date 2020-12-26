@@ -9,7 +9,7 @@ import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
 import com.insiderser.popularmovies.db.entity.MovieEntity
 import com.insiderser.popularmovies.mapper.popularListEntityMapper
-import com.insiderser.popularmovies.mapper.tmdbMovieToMovieEntityMapper
+import com.insiderser.popularmovies.mapper.tmdbMoviesToMovieEntitiesMapper
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
 import com.insiderser.popularmovies.rest.tmdb.TmdbConfig
 import retrofit2.HttpException
@@ -52,7 +52,7 @@ class MoviesRemoteMediator @Inject constructor(
             return MediatorResult.Error(e)
         }
 
-        val entities = loadedMovies.results.map(tmdbMovieToMovieEntityMapper)
+        val entities = tmdbMoviesToMovieEntitiesMapper(loadedMovies)
         val entitiesByPosition = popularListEntityMapper(positionToLoad).invoke(entities)
 
         db.withTransaction {

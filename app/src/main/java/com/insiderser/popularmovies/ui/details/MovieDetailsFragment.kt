@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
@@ -54,6 +55,7 @@ class MovieDetailsFragment : Fragment() {
         }
 
         binding.scrollView.applySystemWindowInsetsToPadding(top = true, bottom = true)
+        binding.reviewsBtn.setOnClickListener { navigateToReviews() }
 
         binding.hero.genresList.adapter = genresAdapter
         binding.hero.genresList.layoutManager = FlexboxLayoutManager(requireContext())
@@ -86,6 +88,11 @@ class MovieDetailsFragment : Fragment() {
 
     private fun bindProductionCompanies(productionCompanies: List<ProductionCompany>) {
         productionCompaniesAdapter.submitList(productionCompanies)
+    }
+
+    private fun navigateToReviews() {
+        val direction = MovieDetailsFragmentDirections.toReviewsFragment(navArgs.movieId)
+        findNavController().navigate(direction)
     }
 
     override fun onDestroyView() {

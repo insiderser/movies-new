@@ -8,6 +8,7 @@ import com.insiderser.popularmovies.model.MoviePoster
 import com.insiderser.popularmovies.model.ProductionCompany
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovie
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovieDetails
+import com.insiderser.popularmovies.rest.tmdb.model.TmdbPopularMovies
 
 fun movieMapper(movie: MovieEntity, genres: List<Genre>, productionCompanies: List<ProductionCompany>) = Movie(
     id = movie.id,
@@ -19,6 +20,10 @@ fun movieMapper(movie: MovieEntity, genres: List<Genre>, productionCompanies: Li
     genres = genres,
     productionCompanies = productionCompanies
 )
+
+val tmdbMoviesToMovieEntitiesMapper = Mapper.build<TmdbPopularMovies, List<MovieEntity>> {
+    results.map(tmdbMovieToMovieEntityMapper)
+}
 
 val tmdbMovieToMovieEntityMapper = Mapper.build<TmdbMovie, MovieEntity> {
     MovieEntity(

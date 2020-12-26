@@ -2,8 +2,10 @@ package com.insiderser.popularmovies.di
 
 import com.insiderser.popularmovies.repo.MovieDetailsRepository
 import com.insiderser.popularmovies.repo.MoviesRepository
+import com.insiderser.popularmovies.repo.ReviewsRepository
 import com.insiderser.popularmovies.repo.impl.MovieDetailsRepositoryImpl
 import com.insiderser.popularmovies.repo.impl.MoviesRepositoryImpl
+import com.insiderser.popularmovies.repo.impl.ReviewsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,4 +20,7 @@ interface RepoModule {
 
     @Binds
     fun bindMovieDetailsRepository(impl: MovieDetailsRepositoryImpl): MovieDetailsRepository
+
+    @Binds
+    fun bindReviewsRepository(impl: ReviewsRepositoryImpl): ReviewsRepository
 }

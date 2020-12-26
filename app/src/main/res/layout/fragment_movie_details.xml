@@ -30,5 +30,11 @@
             tools:itemCount="12"
             tools:listitem="@layout/item_production_company" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reviewsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reviews" />
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
