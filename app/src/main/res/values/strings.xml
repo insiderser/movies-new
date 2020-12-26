@@ -9,4 +9,9 @@
     <string name="transition_list_movies_item">movie_list_%s</string>
     <string name="reviews">Reviews</string>
     <string name="review_author">Review by %s</string>
+    <string name="author">Author</string>
+    <string name="error_too_short">Too short</string>
+    <string name="save">Save</string>
+    <string name="add_review">Add review</string>
+    <string name="review_content_hint">Review</string>
 </resources>

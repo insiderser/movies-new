@@ -3,13 +3,12 @@
     <style name="Base.Theme.PopularMovies" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">?attr/isLightTheme</item>
 
-        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">?attr/isLightTheme
-        </item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.PopularMovies.MediumComponent</item>
 
-        <item name="shapeAppearanceMediumComponent">
-            @style/ShapeAppearance.PopularMovies.MediumComponent
-        </item>
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Surface</item>
+        <item name="materialCardViewStyle">@style/Widget.PopularMovies.CardView</item>
     </style>
 
     <style name="Base.Theme.PopularMovies.BrandColors">

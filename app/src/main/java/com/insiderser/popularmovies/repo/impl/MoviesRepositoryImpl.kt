@@ -8,10 +8,12 @@ import com.insiderser.popularmovies.mapper.asPagingListMapper
 import com.insiderser.popularmovies.mapper.moviePosterMapper
 import com.insiderser.popularmovies.model.MoviePoster
 import com.insiderser.popularmovies.repo.MoviesRepository
+import dagger.Reusable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+@Reusable
 class MoviesRepositoryImpl @Inject constructor(
     private val popularMoviesListDao: PopularMoviesListDao,
     private val moviesRemoteMediator: MoviesRemoteMediator
