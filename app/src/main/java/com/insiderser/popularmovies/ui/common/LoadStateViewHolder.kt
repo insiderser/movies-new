@@ -7,7 +7,7 @@ import androidx.viewbinding.ViewBinding
 import com.insiderser.popularmovies.databinding.ItemLoadStateErrorBinding
 import com.insiderser.popularmovies.databinding.ItemLoadStateLoadingBinding
 
-sealed class FooterLoadStateViewHolder(
+sealed class LoadStateViewHolder(
     binding: ViewBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -21,12 +21,12 @@ sealed class FooterLoadStateViewHolder(
 
     class Loading(
         binding: ItemLoadStateLoadingBinding
-    ) : FooterLoadStateViewHolder(binding)
+    ) : LoadStateViewHolder(binding)
 
     class Error(
         binding: ItemLoadStateErrorBinding,
         retry: () -> Unit
-    ) : FooterLoadStateViewHolder(binding) {
+    ) : LoadStateViewHolder(binding) {
 
         init {
             binding.retryBtn.setOnClickListener { retry() }

@@ -3,7 +3,6 @@ package com.insiderser.popularmovies.repo.impl
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import androidx.room.withTransaction
 import com.insiderser.popularmovies.db.AppDatabase
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
@@ -57,7 +56,7 @@ class MoviesRemoteMediator @Inject constructor(
         val entities = tmdbMoviesToMovieEntitiesMapper(loadedMovies)
         val entitiesByPosition = popularListEntityMapper(positionToLoad).invoke(entities)
 
-        db.withTransaction {
+        db.inTransaction {
             if (loadType == LoadType.REFRESH) {
                 popularMoviesListDao.deleteAll()
             }

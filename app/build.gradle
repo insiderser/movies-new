@@ -24,13 +24,6 @@ android {
         versionCode 1
         versionName '1.0'
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += [
-                        "room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
-
         buildConfigField "String", "TMDB_REST_URL", "\"https://api.themoviedb.org/\""
         buildConfigField "String", "TMDB_BASE_IMAGES_URL", "\"https://image.tmdb.org/t/p/\""
         buildConfigField "String", "TMDB_API_KEY", "\"${localProperties['tmdbApiKey']}\""
@@ -80,9 +73,8 @@ dependencies {
     implementation 'com.google.android:flexbox:2.0.1'
     implementation "dev.chrisbanes:insetter-ktx:0.3.1"
 
-    implementation 'androidx.room:room-runtime:2.3.0-alpha04'
-    implementation "androidx.room:room-ktx:2.3.0-alpha04"
-    kapt 'androidx.room:room-compiler:2.3.0-alpha04'
+    implementation 'androidx.sqlite:sqlite-ktx:2.1.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.1.0'
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
@@ -101,5 +93,5 @@ dependencies {
 
     implementation 'io.noties.markwon:core:4.6.0'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
 }
