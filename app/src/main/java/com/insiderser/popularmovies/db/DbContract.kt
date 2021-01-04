@@ -25,10 +25,9 @@ object DbContract {
         fun getQueryAll(prepend: Boolean = false) =
             // language=RoomSql
             """
-            SELECT movies.*
-            FROM popularMoviesList
-                    JOIN movies ON popularMoviesList.movieId = movies.id
-            WHERE popularMoviesList.position ${if (prepend) "<" else ">="} ?
+            SELECT *
+            FROM popularMovies
+            WHERE position ${if (prepend) "<=" else ">="} ?
             ORDER BY position ${if (prepend) "DESC" else "ASC"}
             LIMIT ?
             """
@@ -53,9 +52,8 @@ object DbContract {
         const val QUERY_BY_MOVIE_ID =
             // language=RoomSql
             """
-            SELECT genres.id, genres.name
-            FROM genres
-                     JOIN movieGenres mg ON genres.id = mg.genreId
+            SELECT id, name
+            FROM genresByMovie
             WHERE movieId = ?
             """
     }
@@ -67,9 +65,8 @@ object DbContract {
         const val QUERY_BY_MOVIE_ID =
             // language=RoomSql
             """
-            SELECT productionCompanies.*
-            FROM productionCompanies
-                     JOIN movieProductionCompanies MPC ON productionCompanies.id = MPC.productionCompanyId
+            SELECT id, name, logoPath
+            FROM productionCompaniesByMovie
             WHERE movieId = ? AND logoPath IS NOT NULL
             """
     }
