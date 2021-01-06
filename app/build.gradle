@@ -4,7 +4,7 @@ plugins {
     id 'kotlinx-serialization'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 def localProperties = new Properties()

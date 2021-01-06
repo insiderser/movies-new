@@ -99,7 +99,7 @@ class MoviesListFragment : Fragment() {
             view to getString(R.string.transition_movie_details)
         )
 
-        val direction = NavMainDirections.toMovieDetailsFragment(movie.id)
+        val direction = NavMainDirections.toMovieDetailsFragment(movieId = movie.id)
         findNavController().navigate(direction, extras)
     }
 
