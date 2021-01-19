@@ -7,7 +7,7 @@ CREATE TABLE Movies
     overview     TEXT NULL,
     posterPath   TEXT NULL,
     backdropPath TEXT NULL,
-    voteAverage REAL NOT NULL
+    voteAverage  REAL NOT NULL
 );
 
 CREATE TABLE PopularMoviesList
