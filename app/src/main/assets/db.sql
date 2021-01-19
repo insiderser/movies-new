@@ -51,7 +51,6 @@ CREATE TABLE Reviews
     movieId INTEGER NOT NULL REFERENCES Movies
 );
 
--- Create indices for all foreign keys. This is for performance reasons.
 CREATE INDEX MovieGenresMovieIdIndex ON MovieGenres (movieId);
 CREATE INDEX MovieGenresGenreIdIndex ON MovieGenres (genreId);
 CREATE INDEX MovieProductionCompaniesMovieIdIndex ON MovieProductionCompanies (movieId);
