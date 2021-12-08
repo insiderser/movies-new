@@ -1,12 +1,10 @@
 package com.insiderser.popularmovies.rest.tmdb
 
 import com.insiderser.popularmovies.BuildConfig
-import dagger.Reusable
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-@Reusable
 class TmdbApiKeyInterceptor @Inject constructor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {

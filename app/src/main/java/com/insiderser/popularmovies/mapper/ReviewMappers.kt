@@ -16,7 +16,3 @@ fun tmdbReviewMapper(movieId: Int) = Mapper.build<TmdbReview, ReviewsEntity> {
 val reviewMapper = Mapper.build<ReviewsEntity, Review> {
     Review(id, author, content)
 }
-
-fun reviewToEntityMapper(movieId: Int) = Mapper.build<Review, ReviewsEntity> {
-    ReviewsEntity(author, content, movieId, id)
-}

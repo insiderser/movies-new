@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.util.Objects
 
 @Entity(
     tableName = "reviews",
@@ -20,5 +21,5 @@ data class ReviewsEntity(
     val author: String,
     val content: String,
     val movieId: Int,
-    @PrimaryKey val id: String
+    @PrimaryKey val id: String = Objects.hash(author, content, movieId).toString()
 )

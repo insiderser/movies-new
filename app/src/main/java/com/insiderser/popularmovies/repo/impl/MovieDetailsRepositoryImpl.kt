@@ -14,12 +14,10 @@ import com.insiderser.popularmovies.mapper.tmdbToProductionCompanyEntityMapper
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.repo.MovieDetailsRepository
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
-import dagger.Reusable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
-@Reusable
 class MovieDetailsRepositoryImpl @Inject constructor(
     private val db: AppDatabase,
     private val moviesDao: MoviesDao,

@@ -12,12 +12,10 @@ import com.insiderser.popularmovies.mapper.popularListEntityMapper
 import com.insiderser.popularmovies.mapper.tmdbMoviesToMovieEntitiesMapper
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
 import com.insiderser.popularmovies.rest.tmdb.TmdbConfig
-import dagger.Reusable
 import retrofit2.HttpException
 import timber.log.Timber
 import javax.inject.Inject
 
-@Reusable
 class MoviesRemoteMediator @Inject constructor(
     private val db: AppDatabase,
     private val moviesDao: MoviesDao,
