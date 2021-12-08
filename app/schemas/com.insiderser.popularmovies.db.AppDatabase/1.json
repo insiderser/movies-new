@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b75493a713d46d9d091e6d37f45d2e41",
+    "identityHash": "396ca86558c9ffa1b12b42c15ca67e23",
     "entities": [
       {
         "tableName": "movies",
@@ -294,12 +294,96 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "similarMovies",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`parentMovieId` INTEGER NOT NULL, `similarMovieId` INTEGER NOT NULL, `position` INTEGER NOT NULL, PRIMARY KEY(`parentMovieId`, `similarMovieId`), FOREIGN KEY(`parentMovieId`) REFERENCES `movies`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`similarMovieId`) REFERENCES `movies`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "parentMovieId",
+            "columnName": "parentMovieId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "similarMovieId",
+            "columnName": "similarMovieId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "parentMovieId",
+            "similarMovieId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_similarMovies_parentMovieId",
+            "unique": false,
+            "columnNames": [
+              "parentMovieId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_similarMovies_parentMovieId` ON `${TABLE_NAME}` (`parentMovieId`)"
+          },
+          {
+            "name": "index_similarMovies_similarMovieId",
+            "unique": false,
+            "columnNames": [
+              "similarMovieId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_similarMovies_similarMovieId` ON `${TABLE_NAME}` (`similarMovieId`)"
+          },
+          {
+            "name": "index_similarMovies_position",
+            "unique": false,
+            "columnNames": [
+              "position"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_similarMovies_position` ON `${TABLE_NAME}` (`position`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "movies",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "parentMovieId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "movies",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "similarMovieId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b75493a713d46d9d091e6d37f45d2e41')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '396ca86558c9ffa1b12b42c15ca67e23')"
     ]
   }
 }

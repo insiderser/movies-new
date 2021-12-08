@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,8 @@ import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.FragmentMovieDetailsBinding
 import com.insiderser.popularmovies.model.Genre
 import com.insiderser.popularmovies.model.Movie
+import com.insiderser.popularmovies.model.MovieBasicInfo
+import com.insiderser.popularmovies.ui.list.horizontal.HorizontalMoviesListAdapter
 import com.insiderser.popularmovies.util.collectWithLifecycle
 import com.insiderser.popularmovies.util.format
 import com.insiderser.popularmovies.util.loadPoster
@@ -26,6 +29,7 @@ class MovieDetailsFragment : Fragment() {
     private var binding: FragmentMovieDetailsBinding by viewLifecycleScoped()
 
     private var genresAdapter: GenresAdapter by viewLifecycleScoped()
+    private var similarAdapter: HorizontalMoviesListAdapter by viewLifecycleScoped()
 
     private val viewModel: MovieDetailsViewModel by viewModels()
 
@@ -47,6 +51,7 @@ class MovieDetailsFragment : Fragment() {
 
         initToolbar()
         initGenres()
+        initSimilar()
 
         viewModel.movieDetails.collectWithLifecycle(viewLifecycleOwner) { bindMovie(it) }
     }
@@ -63,14 +68,21 @@ class MovieDetailsFragment : Fragment() {
         binding.hero.genresList.layoutManager = FlexboxLayoutManager(requireContext())
     }
 
+    private fun initSimilar() {
+        similarAdapter = HorizontalMoviesListAdapter(
+            onItemClick = ::navigateToMovieDetails
+        )
+        binding.similarMoviesList.adapter = similarAdapter
+    }
+
     private fun bindMovie(movie: Movie) = with(binding) {
         hero.posterImage.loadPoster(movie.posterPath)
         hero.title.text = movie.title
         hero.rating.text = movie.voteAverage.toDouble().format()
 
         bindIsFavorite(movie.isFavorite)
-
         bindGenres(movie.genres)
+        bindSimilar(movie.similar)
     }
 
     private fun bindIsFavorite(isFavorite: Boolean) = with(binding.favoriteToggleView) {
@@ -86,8 +98,18 @@ class MovieDetailsFragment : Fragment() {
         genresAdapter.submitList(genres)
     }
 
+    private fun bindSimilar(similar: List<MovieBasicInfo>) {
+        similarAdapter.submitList(similar)
+        binding.similarMoviesHeader.isVisible = similar.isNotEmpty()
+    }
+
     private fun navigateToReviews() {
         val direction = MovieDetailsFragmentDirections.toReviewsFragment(navArgs.movieId)
+        findNavController().navigate(direction)
+    }
+
+    private fun navigateToMovieDetails(movie: MovieBasicInfo) {
+        val direction = MovieDetailsFragmentDirections.toMovieDetailsFragment(movie.id)
         findNavController().navigate(direction)
     }
 }

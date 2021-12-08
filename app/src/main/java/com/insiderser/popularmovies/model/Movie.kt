@@ -11,6 +11,7 @@ data class Movie(
     @FloatRange(from = 0.0, to = 10.0) val voteAverage: Float,
     val isFavorite: Boolean,
     val genres: List<Genre>,
+    val similar: List<MovieBasicInfo>,
 ) {
     init {
         require(voteAverage in 0f..10f)

@@ -2,6 +2,7 @@ package com.insiderser.popularmovies.mapper
 
 import com.insiderser.popularmovies.db.entity.MovieEntity
 import com.insiderser.popularmovies.db.entity.PopularMoviesListEntity
+import com.insiderser.popularmovies.db.entity.SimilarMoviesEntity
 import com.insiderser.popularmovies.model.Genre
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.model.MovieBasicInfo
@@ -9,7 +10,12 @@ import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovie
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovieDetails
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovies
 
-fun movieMapper(movie: MovieEntity, genres: List<Genre>, isFavorite: Boolean) = Movie(
+fun movieMapper(
+    movie: MovieEntity,
+    genres: List<Genre>,
+    isFavorite: Boolean,
+    similarMovies: List<MovieEntity>,
+) = Movie(
     id = movie.id,
     title = movie.title,
     overview = movie.overview,
@@ -18,6 +24,7 @@ fun movieMapper(movie: MovieEntity, genres: List<Genre>, isFavorite: Boolean) = 
     voteAverage = movie.voteAverage,
     isFavorite = isFavorite,
     genres = genres,
+    similar = similarMovies.map(movieBasicInfoMapper),
 )
 
 val tmdbMoviesToMovieEntitiesMapper = Mapper.build<TmdbMovies, List<MovieEntity>> {
@@ -73,4 +80,16 @@ val tmdbMovieToBasicInfoMapper = Mapper.build<TmdbMovie, MovieBasicInfo?> {
         title = title,
         posterPath = poster_path ?: return@build null,
     )
+}
+
+fun similarMoviesMapper(parentMovieId: Int): Mapper<List<MovieEntity>, List<SimilarMoviesEntity>> {
+    return Mapper.build {
+        mapIndexed { index, movieEntity ->
+            SimilarMoviesEntity(
+                parentMovieId = parentMovieId,
+                similarMovieId = movieEntity.id,
+                position = index,
+            )
+        }
+    }
 }

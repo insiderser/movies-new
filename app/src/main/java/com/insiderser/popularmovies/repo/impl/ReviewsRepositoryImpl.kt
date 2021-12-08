@@ -1,5 +1,7 @@
 package com.insiderser.popularmovies.repo.impl
 
+import androidx.room.withTransaction
+import com.insiderser.popularmovies.db.AppDatabase
 import com.insiderser.popularmovies.db.dao.ReviewsDao
 import com.insiderser.popularmovies.mapper.asListMapper
 import com.insiderser.popularmovies.mapper.reviewMapper
@@ -12,6 +14,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ReviewsRepositoryImpl @Inject constructor(
+    private val db: AppDatabase,
     private val reviewsDao: ReviewsDao,
     private val remoteService: MoviesService,
 ) : ReviewsRepository {
@@ -22,6 +25,10 @@ class ReviewsRepositoryImpl @Inject constructor(
     override suspend fun fetchReviews(movieId: Int) {
         val response = remoteService.getMovieReviews(movieId)
         val reviews = tmdbReviewsMapper(movieId).invoke(response)
-        reviewsDao.saveAll(reviews)
+
+        db.withTransaction {
+            reviewsDao.deleteAllForMovie(movieId)
+            reviewsDao.saveAll(reviews)
+        }
     }
 }

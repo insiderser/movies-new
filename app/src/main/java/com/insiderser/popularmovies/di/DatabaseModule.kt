@@ -7,6 +7,7 @@ import com.insiderser.popularmovies.db.dao.GenresDao
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
 import com.insiderser.popularmovies.db.dao.ReviewsDao
+import com.insiderser.popularmovies.db.dao.SimilarMoviesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,4 +44,8 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideFavoriteMoviesDao(db: AppDatabase): FavoriteMoviesDao = db.favoriteMoviesDao
+
+    @Provides
+    @Singleton
+    fun provideSimilarMoviesDao(db: AppDatabase): SimilarMoviesDao = db.similarMoviesDao
 }

@@ -14,7 +14,7 @@ interface MoviesService {
         @Query("page") page: Int = 1
     ): TmdbMovies
 
-    @GET("/3/movie/{movie_id}")
+    @GET("/3/movie/{movie_id}?append_to_response=similar")
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Int
     ): TmdbMovieDetails

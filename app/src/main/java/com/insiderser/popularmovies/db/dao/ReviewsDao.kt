@@ -20,8 +20,13 @@ interface ReviewsDao {
     fun findReviewsByMovieId(movieId: Int): Flow<List<ReviewsEntity>>
 
     @Insert(onConflict = REPLACE)
-    suspend fun save(review: ReviewsEntity)
-
-    @Insert(onConflict = REPLACE)
     suspend fun saveAll(reviews: List<ReviewsEntity>)
+
+    @Query(
+        """
+            DELETE FROM reviews
+            WHERE movieId = :movieId
+        """
+    )
+    suspend fun deleteAllForMovie(movieId: Int)
 }

@@ -12,4 +12,5 @@ data class TmdbMovieDetails(
     val production_companies: List<TmdbProductionCompany>,
     val title: String,
     val vote_average: Float,
+    val similar: TmdbMovies,
 )

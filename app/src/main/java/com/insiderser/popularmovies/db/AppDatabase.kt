@@ -11,12 +11,14 @@ import com.insiderser.popularmovies.db.dao.GenresDao
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
 import com.insiderser.popularmovies.db.dao.ReviewsDao
+import com.insiderser.popularmovies.db.dao.SimilarMoviesDao
 import com.insiderser.popularmovies.db.entity.FavoriteMovieEntity
 import com.insiderser.popularmovies.db.entity.GenreEntity
 import com.insiderser.popularmovies.db.entity.MovieEntity
 import com.insiderser.popularmovies.db.entity.MovieGenresEntity
 import com.insiderser.popularmovies.db.entity.PopularMoviesListEntity
 import com.insiderser.popularmovies.db.entity.ReviewsEntity
+import com.insiderser.popularmovies.db.entity.SimilarMoviesEntity
 
 private const val DB_VERSION = 1
 private const val DB_FILE_NAME = "movies.db"
@@ -29,6 +31,7 @@ private const val DB_FILE_NAME = "movies.db"
         MovieGenresEntity::class,
         ReviewsEntity::class,
         FavoriteMovieEntity::class,
+        SimilarMoviesEntity::class,
     ],
     version = DB_VERSION
 )
@@ -42,6 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val genresDao: GenresDao
     abstract val reviewsDao: ReviewsDao
     abstract val favoriteMoviesDao: FavoriteMoviesDao
+    abstract val similarMoviesDao: SimilarMoviesDao
 
     companion object {
         @JvmStatic

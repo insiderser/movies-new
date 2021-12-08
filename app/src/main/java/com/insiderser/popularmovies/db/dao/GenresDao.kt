@@ -27,4 +27,12 @@ interface GenresDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun insertAllMovieGenres(genres: List<MovieGenresEntity>)
+
+    @Query(
+        """
+            DELETE FROM movieGenres
+            WHERE movieId = :movieId
+        """
+    )
+    suspend fun deleteAllForMovie(movieId: Int)
 }
