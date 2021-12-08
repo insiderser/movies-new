@@ -11,4 +11,8 @@ data class Movie(
     @FloatRange(from = 0.0, to = 10.0) val voteAverage: Float,
     val genres: List<Genre>,
     val productionCompanies: List<ProductionCompany>
-)
+) {
+    init {
+        require(voteAverage in 0f..10f)
+    }
+}

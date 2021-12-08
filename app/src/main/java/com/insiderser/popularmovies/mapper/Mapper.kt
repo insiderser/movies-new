@@ -1,6 +1,5 @@
 package com.insiderser.popularmovies.mapper
 
-import android.database.Cursor
 import androidx.paging.PagingData
 import androidx.paging.map
 
@@ -19,12 +18,3 @@ fun <From, To> Mapper<From, To>.asListMapper(): Mapper<List<From>, List<To>> =
 
 fun <From : Any, To : Any> Mapper<From, To>.asPagingListMapper(): Mapper<PagingData<From>, PagingData<To>> =
     Mapper.build { map { invoke(it) } }
-
-inline fun <T> Cursor.map(itemMapper: (Cursor) -> T, closeOnEnd: Boolean = true) = List(count) { index ->
-    moveToPosition(index)
-    itemMapper(this)
-}.also {
-    if (closeOnEnd) {
-        close()
-    }
-}

@@ -1,17 +1,19 @@
 package com.insiderser.popularmovies.ui.reviews.add
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.insiderser.popularmovies.model.Review
 import com.insiderser.popularmovies.repo.ReviewsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import java.util.UUID
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class AddReviewViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AddReviewViewModel @Inject constructor(
     private val reviewsRepository: ReviewsRepository,
 ) : ViewModel() {
 

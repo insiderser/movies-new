@@ -1,57 +1,47 @@
 package com.insiderser.popularmovies.di
 
-import androidx.sqlite.db.SupportSQLiteOpenHelper
+import android.content.Context
 import com.insiderser.popularmovies.db.AppDatabase
-import com.insiderser.popularmovies.db.AppDatabaseImpl
-import com.insiderser.popularmovies.db.DbHelperFactory
 import com.insiderser.popularmovies.db.dao.GenresDao
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
 import com.insiderser.popularmovies.db.dao.ProductionCompaniesDao
 import com.insiderser.popularmovies.db.dao.ReviewsDao
-import com.insiderser.popularmovies.db.dao.impl.GenresDaoImpl
-import com.insiderser.popularmovies.db.dao.impl.MoviesDaoImpl
-import com.insiderser.popularmovies.db.dao.impl.PopularMoviesListDaoImpl
-import com.insiderser.popularmovies.db.dao.impl.ProductionCompaniesDaoImpl
-import com.insiderser.popularmovies.db.dao.impl.ReviewsDaoImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface DatabaseModule {
+object DatabaseModule {
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindAppDatabase(impl: AppDatabaseImpl): AppDatabase
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
+        AppDatabase.create(context)
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindMoviesDao(impl: MoviesDaoImpl): MoviesDao
+    fun provideMoviesDao(db: AppDatabase): MoviesDao = db.getMoviesDao()
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindPopularMoviesListDao(impl: PopularMoviesListDaoImpl): PopularMoviesListDao
+    fun providePopularMoviesListDao(db: AppDatabase): PopularMoviesListDao =
+        db.getPopularMoviesListDao()
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindGenresDao(impl: GenresDaoImpl): GenresDao
+    fun provideGenresDao(db: AppDatabase): GenresDao = db.getGenresDao()
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindProductionCompaniesDao(impl: ProductionCompaniesDaoImpl): ProductionCompaniesDao
+    fun provideProductionCompaniesDao(db: AppDatabase): ProductionCompaniesDao =
+        db.getProductionCompaniesDao()
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindReviewsDao(impl: ReviewsDaoImpl): ReviewsDao
-
-    companion object {
-        @Provides
-        @Singleton
-        fun provideDbHelper(factory: DbHelperFactory): SupportSQLiteOpenHelper = factory.create()
-    }
+    fun provideReviewsDao(db: AppDatabase): ReviewsDao = db.getReviewsDao()
 }

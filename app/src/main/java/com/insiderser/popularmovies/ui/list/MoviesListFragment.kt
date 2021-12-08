@@ -16,7 +16,7 @@ import com.insiderser.popularmovies.NavMainDirections
 import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.FragmentMoviesListBinding
 import com.insiderser.popularmovies.model.MoviePoster
-import com.insiderser.popularmovies.ui.common.LoadStateAdapter
+import com.insiderser.popularmovies.ui.common.FooterLoadStateAdapter
 import com.insiderser.popularmovies.util.applySystemWindowInsetsToProgressOffset
 import com.insiderser.popularmovies.util.getMessageForUser
 import com.insiderser.popularmovies.util.observe
@@ -32,9 +32,6 @@ class MoviesListFragment : Fragment() {
     private val viewModel: MoviesListViewModel by viewModels()
 
     private var binding: FragmentMoviesListBinding by viewLifecycleScoped()
-    private val loadStateAdapter: LoadStateAdapter by lazy {
-        LoadStateAdapter(moviesAdapter::retry)
-    }
     private val moviesAdapter: MoviesListAdapter by lazy {
         MoviesListAdapter(
             onItemClick = ::navigateToMovieDetails
@@ -65,7 +62,11 @@ class MoviesListFragment : Fragment() {
     private fun setupUi() {
         binding.swipeRefreshLayout.applySystemWindowInsetsToProgressOffset()
         binding.moviesList.applySystemWindowInsetsToPadding(top = true, bottom = true)
-        binding.moviesList.adapter = moviesAdapter.withLoadStateHeaderAndFooter(loadStateAdapter, loadStateAdapter)
+        binding.moviesList.adapter = moviesAdapter.withLoadStateFooter(
+            FooterLoadStateAdapter(
+                retry = moviesAdapter::retry
+            )
+        )
         binding.swipeRefreshLayout.setOnRefreshListener(moviesAdapter::refresh)
 
         observeLoadingState()

@@ -1,12 +1,14 @@
 package com.insiderser.popularmovies.ui.list
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.insiderser.popularmovies.repo.MoviesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MoviesListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MoviesListViewModel @Inject constructor(
     moviesRepository: MoviesRepository
 ) : ViewModel() {
 

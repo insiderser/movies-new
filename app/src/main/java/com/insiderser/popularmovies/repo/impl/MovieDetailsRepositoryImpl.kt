@@ -1,5 +1,6 @@
 package com.insiderser.popularmovies.repo.impl
 
+import androidx.room.withTransaction
 import com.insiderser.popularmovies.db.AppDatabase
 import com.insiderser.popularmovies.db.dao.GenresDao
 import com.insiderser.popularmovies.db.dao.MoviesDao
@@ -50,7 +51,7 @@ class MovieDetailsRepositoryImpl @Inject constructor(
         val movieGenreEntities = genreEntities.map(movieGenreMapper(movieId))
         val movieProductionCompanyEntities = productionCompanyEntities.map(movieProductionCompanyMapper(movieId))
 
-        db.inTransaction {
+        db.withTransaction {
             moviesDao.insert(movieEntity)
             genresDao.insertAll(genreEntities)
             genresDao.insertAllMovieGenres(movieGenreEntities)

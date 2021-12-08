@@ -1,6 +1,10 @@
 package com.insiderser.popularmovies.db.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "genres")
 data class GenreEntity(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String
 )

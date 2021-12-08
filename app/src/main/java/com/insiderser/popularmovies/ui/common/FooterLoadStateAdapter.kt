@@ -7,29 +7,29 @@ import androidx.paging.LoadStateAdapter
 import com.insiderser.popularmovies.databinding.ItemLoadStateErrorBinding
 import com.insiderser.popularmovies.databinding.ItemLoadStateLoadingBinding
 
-class LoadStateAdapter(
+class FooterLoadStateAdapter(
     private val retry: () -> Unit
-) : LoadStateAdapter<LoadStateViewHolder>() {
+) : LoadStateAdapter<FooterLoadStateViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         loadState: LoadState
-    ): LoadStateViewHolder {
+    ): FooterLoadStateViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (loadState) {
             LoadState.Loading -> {
                 val binding = ItemLoadStateLoadingBinding.inflate(inflater, parent, false)
-                LoadStateViewHolder.Loading(binding)
+                FooterLoadStateViewHolder.Loading(binding)
             }
             is LoadState.Error -> {
                 val binding = ItemLoadStateErrorBinding.inflate(inflater, parent, false)
-                LoadStateViewHolder.Error(binding, retry)
+                FooterLoadStateViewHolder.Error(binding, retry)
             }
             else -> throw IllegalArgumentException("Load state $loadState is not supported.")
         }
     }
 
-    override fun onBindViewHolder(holder: LoadStateViewHolder, loadState: LoadState) {}
+    override fun onBindViewHolder(holder: FooterLoadStateViewHolder, loadState: LoadState) {}
 
     override fun getStateViewType(loadState: LoadState): Int =
         if (loadState is LoadState.Error) 0 else 1

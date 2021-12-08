@@ -1,17 +1,19 @@
 package com.insiderser.popularmovies.ui.details
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.insiderser.popularmovies.repo.MovieDetailsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieDetailsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MovieDetailsViewModel @Inject constructor(
     private val movieDetailsRepository: MovieDetailsRepository
 ) : ViewModel() {
 
