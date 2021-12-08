@@ -12,8 +12,6 @@ class CoilInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
         val imageLoader = ImageLoader.Builder(context)
-            // App crashes on Android O+ devices because shared element transitions are not hardware-accelerated.
-            .allowHardware(false)
             .apply {
                 if (BuildConfig.DEBUG) {
                     logger(DebugLogger(level = Log.INFO))

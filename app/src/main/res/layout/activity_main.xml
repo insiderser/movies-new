@@ -12,11 +12,4 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_main" />
 
-    <View
-        android:id="@+id/statusBarScrim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.7"
-        android:background="?attr/colorSurface" />
-
 </FrameLayout>

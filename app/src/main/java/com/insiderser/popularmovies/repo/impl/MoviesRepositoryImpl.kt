@@ -5,8 +5,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
 import com.insiderser.popularmovies.mapper.asPagingListMapper
-import com.insiderser.popularmovies.mapper.moviePosterMapper
-import com.insiderser.popularmovies.model.MoviePoster
+import com.insiderser.popularmovies.mapper.movieBasicInfoMapper
+import com.insiderser.popularmovies.model.MovieBasicInfo
 import com.insiderser.popularmovies.repo.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -17,12 +17,12 @@ class MoviesRepositoryImpl @Inject constructor(
     private val moviesRemoteMediator: MoviesRemoteMediator
 ) : MoviesRepository {
 
-    override fun getMovies(): Flow<PagingData<MoviePoster>> {
+    override fun getMovies(pagingConfig: PagingConfig): Flow<PagingData<MovieBasicInfo>> {
         val pager = Pager(
-            config = PagingConfig(pageSize = 20),
+            config = pagingConfig,
             remoteMediator = moviesRemoteMediator,
             pagingSourceFactory = { popularMoviesListDao.findAllMovies() }
         )
-        return pager.flow.map { moviePosterMapper.asPagingListMapper().invoke(it) }
+        return pager.flow.map { movieBasicInfoMapper.asPagingListMapper().invoke(it) }
     }
 }

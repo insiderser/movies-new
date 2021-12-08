@@ -7,4 +7,11 @@
     <string name="poster_of_the_movie">Poster of the movie</string>
     <string name="reviews">Reviews</string>
     <string name="review_author">Review by %s</string>
+    <string name="favorites">Favorites</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="remove_from_favorites">Remove from Favorites</string>
+    <string name="no_favorites">No Favorites</string>
+    <string name="no_favorites_explanation">Mark movies as favorite\nby clicking on the 🤎 icon</string>
+    <string name="no_reviews">No Reviews</string>
+    <string name="no_reviews_explanation">Looks like this movie\nhasn\'t been reviewed yet</string>
 </resources>

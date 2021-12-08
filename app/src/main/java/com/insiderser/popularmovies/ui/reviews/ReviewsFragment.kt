@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.insiderser.popularmovies.databinding.FragmentReviewsBinding
-import com.insiderser.popularmovies.util.observe
+import com.insiderser.popularmovies.model.Review
+import com.insiderser.popularmovies.util.collectWithLifecycle
 import com.insiderser.popularmovies.util.viewLifecycleScoped
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
@@ -20,11 +21,7 @@ class ReviewsFragment : Fragment() {
 
     private val viewModel: ReviewsViewModel by viewModels()
 
-    private val reviewsAdapter by lazy {
-        ReviewsAdapter()
-    }
-
-    private val navArgs: ReviewsFragmentArgs by navArgs()
+    private var reviewsAdapter: ReviewsAdapter by viewLifecycleScoped()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,15 +34,19 @@ class ReviewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.reviewsList.applySystemWindowInsetsToPadding(top = true, bottom = true)
+        binding.reviewsAppBar.applySystemWindowInsetsToPadding(top = true)
+        binding.reviewsToolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
+
+        reviewsAdapter = ReviewsAdapter()
+        binding.reviewsList.applySystemWindowInsetsToPadding(bottom = true)
         binding.reviewsList.adapter = reviewsAdapter
 
-        viewModel.init(navArgs.movieId)
-        viewModel.reviews.observe(viewLifecycleOwner, reviewsAdapter::submitList)
+        viewModel.reviews.collectWithLifecycle(viewLifecycleOwner) { handleReviews(it) }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.reviewsList.adapter = null
+    private fun handleReviews(reviews: List<Review>) {
+        reviewsAdapter.submitList(reviews)
+        binding.noReviewsContainer.root.isVisible = reviews.isEmpty()
+        binding.reviewsList.isVisible = reviews.isNotEmpty()
     }
 }

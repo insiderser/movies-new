@@ -9,8 +9,8 @@ data class Movie(
     val posterPath: String?,
     val backdropPath: String?,
     @FloatRange(from = 0.0, to = 10.0) val voteAverage: Float,
+    val isFavorite: Boolean,
     val genres: List<Genre>,
-    val productionCompanies: List<ProductionCompany>
 ) {
     init {
         require(voteAverage in 0f..10f)

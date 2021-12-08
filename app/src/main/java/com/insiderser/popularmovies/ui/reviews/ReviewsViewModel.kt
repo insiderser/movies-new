@@ -1,33 +1,29 @@
 package com.insiderser.popularmovies.ui.reviews
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.insiderser.popularmovies.repo.ReviewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ReviewsViewModel @Inject constructor(
-    private val reviewsRepository: ReviewsRepository
+    private val reviewsRepository: ReviewsRepository,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val currentMovieIdFlow = MutableSharedFlow<Int>(replay = 1)
+    private val navArgs = ReviewsFragmentArgs.fromSavedStateHandle(savedStateHandle)
 
-    val reviews = currentMovieIdFlow
-        .distinctUntilChanged()
-        .flatMapLatest { movieId -> reviewsRepository.getReviews(movieId) }
+    val reviews = reviewsRepository.observeReviews(navArgs.movieId)
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
-    fun init(movieId: Int) {
+    init {
         viewModelScope.launch {
-            currentMovieIdFlow.emit(movieId)
-            reviewsRepository.fetchReviews(movieId)
+            reviewsRepository.fetchReviews(navArgs.movieId)
         }
     }
 }

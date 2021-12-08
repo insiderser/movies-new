@@ -2,10 +2,10 @@ package com.insiderser.popularmovies.di
 
 import android.content.Context
 import com.insiderser.popularmovies.db.AppDatabase
+import com.insiderser.popularmovies.db.dao.FavoriteMoviesDao
 import com.insiderser.popularmovies.db.dao.GenresDao
 import com.insiderser.popularmovies.db.dao.MoviesDao
 import com.insiderser.popularmovies.db.dao.PopularMoviesListDao
-import com.insiderser.popularmovies.db.dao.ProductionCompaniesDao
 import com.insiderser.popularmovies.db.dao.ReviewsDao
 import dagger.Module
 import dagger.Provides
@@ -25,23 +25,22 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideMoviesDao(db: AppDatabase): MoviesDao = db.getMoviesDao()
+    fun provideMoviesDao(db: AppDatabase): MoviesDao = db.moviesDao
 
     @Provides
     @Singleton
     fun providePopularMoviesListDao(db: AppDatabase): PopularMoviesListDao =
-        db.getPopularMoviesListDao()
+        db.popularMoviesListDao
 
     @Provides
     @Singleton
-    fun provideGenresDao(db: AppDatabase): GenresDao = db.getGenresDao()
+    fun provideGenresDao(db: AppDatabase): GenresDao = db.genresDao
 
     @Provides
     @Singleton
-    fun provideProductionCompaniesDao(db: AppDatabase): ProductionCompaniesDao =
-        db.getProductionCompaniesDao()
+    fun provideReviewsDao(db: AppDatabase): ReviewsDao = db.reviewsDao
 
     @Provides
     @Singleton
-    fun provideReviewsDao(db: AppDatabase): ReviewsDao = db.getReviewsDao()
+    fun provideFavoriteMoviesDao(db: AppDatabase): FavoriteMoviesDao = db.favoriteMoviesDao
 }

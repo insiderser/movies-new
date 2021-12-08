@@ -4,21 +4,20 @@ import com.insiderser.popularmovies.db.entity.MovieEntity
 import com.insiderser.popularmovies.db.entity.PopularMoviesListEntity
 import com.insiderser.popularmovies.model.Genre
 import com.insiderser.popularmovies.model.Movie
-import com.insiderser.popularmovies.model.MoviePoster
-import com.insiderser.popularmovies.model.ProductionCompany
+import com.insiderser.popularmovies.model.MovieBasicInfo
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovie
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovieDetails
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbPopularMovies
 
-fun movieMapper(movie: MovieEntity, genres: List<Genre>, productionCompanies: List<ProductionCompany>) = Movie(
+fun movieMapper(movie: MovieEntity, genres: List<Genre>, isFavorite: Boolean) = Movie(
     id = movie.id,
     title = movie.title,
     overview = movie.overview,
     posterPath = movie.posterPath,
     backdropPath = movie.backdropPath,
     voteAverage = movie.voteAverage,
+    isFavorite = isFavorite,
     genres = genres,
-    productionCompanies = productionCompanies
 )
 
 val tmdbMoviesToMovieEntitiesMapper = Mapper.build<TmdbPopularMovies, List<MovieEntity>> {
@@ -56,8 +55,8 @@ fun popularListEntityMapper(startPosition: Int) = Mapper.build<List<MovieEntity>
     }
 }
 
-val moviePosterMapper = Mapper.build<MovieEntity, MoviePoster> {
-    MoviePoster(
+val movieBasicInfoMapper = Mapper.build<MovieEntity, MovieBasicInfo> {
+    MovieBasicInfo(
         id = id,
         title = title,
         posterPath = posterPath,

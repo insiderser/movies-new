@@ -16,7 +16,7 @@ class ReviewsRepositoryImpl @Inject constructor(
     private val remoteService: MoviesService,
 ) : ReviewsRepository {
 
-    override fun getReviews(movieId: Int): Flow<List<Review>> = reviewsDao.findReviewsByMovieId(movieId)
+    override fun observeReviews(movieId: Int): Flow<List<Review>> = reviewsDao.findReviewsByMovieId(movieId)
         .map { reviewMapper.asListMapper().invoke(it) }
 
     override suspend fun fetchReviews(movieId: Int) {

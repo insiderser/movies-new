@@ -2,7 +2,7 @@ package com.insiderser.popularmovies.ui.list
 
 import androidx.recyclerview.widget.RecyclerView
 import com.insiderser.popularmovies.databinding.ItemMovieBinding
-import com.insiderser.popularmovies.model.MoviePoster
+import com.insiderser.popularmovies.model.MovieBasicInfo
 import com.insiderser.popularmovies.util.loadPoster
 
 class MoviesListViewHolder(
@@ -10,7 +10,7 @@ class MoviesListViewHolder(
     private val onItemClick: OnMovieItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var currentMovie: MoviePoster? = null
+    private var currentMovie: MovieBasicInfo? = null
 
     init {
         binding.image.setOnClickListener {
@@ -18,7 +18,7 @@ class MoviesListViewHolder(
         }
     }
 
-    fun bind(movie: MoviePoster?) = with(binding) {
+    fun bind(movie: MovieBasicInfo?) = with(binding) {
         currentMovie = movie
         image.contentDescription = movie?.title
 

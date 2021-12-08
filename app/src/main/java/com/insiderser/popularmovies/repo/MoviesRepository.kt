@@ -1,10 +1,11 @@
 package com.insiderser.popularmovies.repo
 
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.insiderser.popularmovies.model.MoviePoster
+import com.insiderser.popularmovies.model.MovieBasicInfo
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
 
-    fun getMovies(): Flow<PagingData<MoviePoster>>
+    fun getMovies(pagingConfig: PagingConfig): Flow<PagingData<MovieBasicInfo>>
 }

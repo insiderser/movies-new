@@ -129,9 +129,7 @@ private val stillSizes = listOf(
 )
 
 private fun getPosterSizePath(width: Int) = findSizePath(posterSizes, width) ?: ORIGINAL
-
 private fun getBackdropSizePath(width: Int) = findSizePath(backdropSizes, width) ?: ORIGINAL
-
 private fun getLogoSizePath(width: Int) = findSizePath(logoSizes, width) ?: ORIGINAL
 
 private fun getProfileSizePath(width: Int, height: Int) = findSizePath(profileSizes, width) ?: run {

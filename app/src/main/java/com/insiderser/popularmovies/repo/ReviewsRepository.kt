@@ -4,6 +4,6 @@ import com.insiderser.popularmovies.model.Review
 import kotlinx.coroutines.flow.Flow
 
 interface ReviewsRepository {
-    fun getReviews(movieId: Int): Flow<List<Review>>
+    fun observeReviews(movieId: Int): Flow<List<Review>>
     suspend fun fetchReviews(movieId: Int)
 }

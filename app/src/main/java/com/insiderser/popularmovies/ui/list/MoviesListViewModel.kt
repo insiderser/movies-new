@@ -1,16 +1,11 @@
 package com.insiderser.popularmovies.ui.list
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
-import com.insiderser.popularmovies.repo.MoviesRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import androidx.paging.PagingData
+import com.insiderser.popularmovies.model.MovieBasicInfo
+import kotlinx.coroutines.flow.Flow
 
-@HiltViewModel
-class MoviesListViewModel @Inject constructor(
-    moviesRepository: MoviesRepository
-) : ViewModel() {
+abstract class MoviesListViewModel : ViewModel() {
 
-    val movies = moviesRepository.getMovies().cachedIn(viewModelScope)
+    abstract val movies: Flow<PagingData<MovieBasicInfo>>
 }
