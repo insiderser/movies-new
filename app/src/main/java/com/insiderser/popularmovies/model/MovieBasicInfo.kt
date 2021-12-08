@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 data class MovieBasicInfo(
     val id: Int,
     val title: String,
-    val posterPath: String?,
+    val posterPath: String,
 )
 
 object MovieBasicInfoDiffCallback : DiffUtil.ItemCallback<MovieBasicInfo>() {

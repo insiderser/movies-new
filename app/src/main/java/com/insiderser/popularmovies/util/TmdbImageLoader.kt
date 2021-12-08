@@ -1,86 +1,63 @@
 package com.insiderser.popularmovies.util
 
 import android.widget.ImageView
-import androidx.core.view.doOnPreDraw
-import coil.ImageLoader
-import coil.imageLoader
-import coil.load
-import coil.request.ImageRequest
 import com.insiderser.popularmovies.BuildConfig
 
 fun ImageView.loadPoster(
     path: String?,
-    imageLoader: ImageLoader = context.imageLoader,
-    builder: ImageRequest.Builder.() -> Unit = {}
+    builder: LoadImageBuilder? = null
 ) = loadImage(
     path,
     sizePathProvider = { getPosterSizePath(width) },
-    imageLoader,
     builder
 )
 
 fun ImageView.loadBackdrop(
     path: String?,
-    imageLoader: ImageLoader = context.imageLoader,
-    builder: ImageRequest.Builder.() -> Unit = {}
+    builder: LoadImageBuilder? = null
 ) = loadImage(
     path,
     sizePathProvider = { getBackdropSizePath(width) },
-    imageLoader,
     builder
 )
 
 fun ImageView.loadLogo(
     path: String?,
-    imageLoader: ImageLoader = context.imageLoader,
-    builder: ImageRequest.Builder.() -> Unit = {}
+    builder: LoadImageBuilder? = null
 ) = loadImage(
     path,
     sizePathProvider = { getLogoSizePath(width) },
-    imageLoader,
     builder
 )
 
 fun ImageView.loadProfile(
     path: String?,
-    imageLoader: ImageLoader = context.imageLoader,
-    builder: ImageRequest.Builder.() -> Unit = {}
+    builder: LoadImageBuilder? = null
 ) = loadImage(
     path,
     sizePathProvider = { getProfileSizePath(width = width, height = height) },
-    imageLoader,
     builder
 )
 
 fun ImageView.loadStill(
     path: String?,
-    imageLoader: ImageLoader = context.imageLoader,
-    builder: ImageRequest.Builder.() -> Unit = {}
+    builder: LoadImageBuilder? = null
 ) = loadImage(
     path,
     sizePathProvider = { getStillSizePath(width) },
-    imageLoader,
     builder
 )
 
 private fun ImageView.loadImage(
     imagePath: String?,
     sizePathProvider: ImageView.() -> String,
-    imageLoader: ImageLoader = context.imageLoader,
-    builder: ImageRequest.Builder.() -> Unit = {}
+    builder: LoadImageBuilder? = null
 ) {
-    if (!isLaidOut) {
-        doOnPreDraw {
-            loadImage(imagePath, sizePathProvider, imageLoader, builder)
-        }
-        return
-    }
-
     val fullPath = buildPathOrNull(
         sizePath = sizePathProvider(),
         imagePath = imagePath
     )
-    load(fullPath, imageLoader, builder)
+    load(fullPath, builder)
 }
 
 private fun buildPathOrNull(sizePath: String, imagePath: String?): String? {

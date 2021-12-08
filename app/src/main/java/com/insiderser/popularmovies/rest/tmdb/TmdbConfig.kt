@@ -3,6 +3,7 @@ package com.insiderser.popularmovies.rest.tmdb
 object TmdbConfig {
 
     const val PAGE_SIZE = 20
+    const val PAGE_DEFAULT = 1
 
     /**
      * Http code: 422 Unprocessable Entity.

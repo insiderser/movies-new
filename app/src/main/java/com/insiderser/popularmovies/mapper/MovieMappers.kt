@@ -7,7 +7,7 @@ import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.model.MovieBasicInfo
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovie
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovieDetails
-import com.insiderser.popularmovies.rest.tmdb.model.TmdbPopularMovies
+import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovies
 
 fun movieMapper(movie: MovieEntity, genres: List<Genre>, isFavorite: Boolean) = Movie(
     id = movie.id,
@@ -20,27 +20,27 @@ fun movieMapper(movie: MovieEntity, genres: List<Genre>, isFavorite: Boolean) = 
     genres = genres,
 )
 
-val tmdbMoviesToMovieEntitiesMapper = Mapper.build<TmdbPopularMovies, List<MovieEntity>> {
-    results.map(tmdbMovieToMovieEntityMapper)
+val tmdbMoviesToMovieEntitiesMapper = Mapper.build<TmdbMovies, List<MovieEntity>> {
+    results.mapNotNull(tmdbMovieToMovieEntityMapper)
 }
 
-val tmdbMovieToMovieEntityMapper = Mapper.build<TmdbMovie, MovieEntity> {
+val tmdbMovieToMovieEntityMapper = Mapper.build<TmdbMovie, MovieEntity?> {
     MovieEntity(
         id = id,
         title = title,
         overview = overview,
-        posterPath = poster_path,
+        posterPath = poster_path ?: return@build null,
         backdropPath = backdrop_path,
         voteAverage = vote_average
     )
 }
 
-val tmdbDetailsToMovieEntityMapper = Mapper.build<TmdbMovieDetails, MovieEntity> {
+val tmdbDetailsToMovieEntityMapper = Mapper.build<TmdbMovieDetails, MovieEntity?> {
     MovieEntity(
         id = id,
         title = title,
         overview = overview,
-        posterPath = poster_path,
+        posterPath = poster_path ?: return@build null,
         backdropPath = backdrop_path,
         voteAverage = vote_average
     )
@@ -60,5 +60,17 @@ val movieBasicInfoMapper = Mapper.build<MovieEntity, MovieBasicInfo> {
         id = id,
         title = title,
         posterPath = posterPath,
+    )
+}
+
+val tmdbMoviesToBasicInfoMapper = Mapper.build<TmdbMovies, List<MovieBasicInfo>> {
+    this.results.mapNotNull(tmdbMovieToBasicInfoMapper)
+}
+
+val tmdbMovieToBasicInfoMapper = Mapper.build<TmdbMovie, MovieBasicInfo?> {
+    MovieBasicInfo(
+        id = id,
+        title = title,
+        posterPath = poster_path ?: return@build null,
     )
 }

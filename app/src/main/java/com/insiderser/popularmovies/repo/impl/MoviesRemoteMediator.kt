@@ -12,7 +12,6 @@ import com.insiderser.popularmovies.mapper.popularListEntityMapper
 import com.insiderser.popularmovies.mapper.tmdbMoviesToMovieEntitiesMapper
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
 import com.insiderser.popularmovies.rest.tmdb.TmdbConfig
-import retrofit2.HttpException
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -44,11 +43,6 @@ class MoviesRemoteMediator @Inject constructor(
             moviesService.getPopularMovies(page = pageToLoad)
         } catch (e: Exception) {
             Timber.e(e)
-
-            if (e is HttpException && e.code() == TmdbConfig.PAGE_OUT_OF_RANGE_CODE) {
-                return MediatorResult.Success(endOfPaginationReached = true)
-            }
-
             return MediatorResult.Error(e)
         }
 

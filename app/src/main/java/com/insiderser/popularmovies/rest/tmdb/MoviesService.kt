@@ -1,7 +1,7 @@
 package com.insiderser.popularmovies.rest.tmdb
 
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovieDetails
-import com.insiderser.popularmovies.rest.tmdb.model.TmdbPopularMovies
+import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovies
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbReviews
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,7 +12,7 @@ interface MoviesService {
     @GET("/3/movie/popular")
     suspend fun getPopularMovies(
         @Query("page") page: Int = 1
-    ): TmdbPopularMovies
+    ): TmdbMovies
 
     @GET("/3/movie/{movie_id}")
     suspend fun getMovieDetails(

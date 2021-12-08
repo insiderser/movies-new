@@ -34,10 +34,18 @@ class PopularMoviesFragment : Fragment() {
             onFavoritesSelected()
             true
         }
+        R.id.searchMenuItem -> {
+            onSearchSelected()
+            true
+        }
         else -> false
     }
 
     private fun onFavoritesSelected() {
         findNavController().navigate(PopularMoviesFragmentDirections.toFavoriteMovies())
+    }
+
+    private fun onSearchSelected() {
+        findNavController().navigate(PopularMoviesFragmentDirections.toSearchMovies())
     }
 }

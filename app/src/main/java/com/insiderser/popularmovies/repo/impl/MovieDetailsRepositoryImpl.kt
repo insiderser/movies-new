@@ -40,7 +40,7 @@ class MovieDetailsRepositoryImpl @Inject constructor(
     override suspend fun loadMovieDetails(movieId: Int) {
         val movieDetails = moviesService.getMovieDetails(movieId)
 
-        val movieEntity = tmdbDetailsToMovieEntityMapper(movieDetails)
+        val movieEntity = tmdbDetailsToMovieEntityMapper(movieDetails) ?: return
         val genreEntities = movieDetails.genres.map(tmdbToGenreEntityMapper)
 
         val movieGenreEntities = genreEntities.map(movieGenreMapper(movieId))

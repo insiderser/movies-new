@@ -3,6 +3,7 @@ package com.insiderser.popularmovies.di
 import com.insiderser.popularmovies.BuildConfig
 import com.insiderser.popularmovies.rest.tmdb.GenresService
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
+import com.insiderser.popularmovies.rest.tmdb.SearchService
 import com.insiderser.popularmovies.rest.tmdb.TmdbApiKeyInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -72,4 +73,8 @@ object RestModule {
     @Provides
     @Singleton
     fun provideGenresService(@Tmdb retrofit: Retrofit): GenresService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun provideSearchService(@Tmdb retrofit: Retrofit): SearchService = retrofit.create()
 }

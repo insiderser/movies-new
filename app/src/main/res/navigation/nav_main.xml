@@ -38,4 +38,11 @@
     <action
         android:id="@+id/to_favoriteMovies"
         app:destination="@id/favoriteMoviesFragment" />
+    <fragment
+        android:id="@+id/searchMoviesFragment"
+        android:name="com.insiderser.popularmovies.ui.list.search.SearchMoviesFragment"
+        tools:layout="@layout/fragment_favorite_movies" />
+    <action
+        android:id="@+id/to_searchMovies"
+        app:destination="@id/searchMoviesFragment" />
 </navigation>
