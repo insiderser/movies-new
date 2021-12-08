@@ -4,14 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialElevationScale
 import com.insiderser.popularmovies.NavMainDirections
 import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.FragmentMoviesListBinding
@@ -49,13 +46,10 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        postponeEnterTransition()
-
         setupUi()
 
         viewModel.movies.observe(viewLifecycleOwner) { movies ->
             moviesAdapter.submitData(movies)
-            binding.moviesList.doOnPreDraw { startPostponedEnterTransition() }
         }
     }
 
@@ -88,20 +82,9 @@ class MoviesListFragment : Fragment() {
         }
     }
 
-    private fun navigateToMovieDetails(movie: MoviePoster, view: View) {
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = resources.getInteger(R.integer.animation_duration_long).toLong()
-        }
-        reenterTransition = MaterialElevationScale(true).apply {
-            duration = resources.getInteger(R.integer.animation_duration_long).toLong()
-        }
-
-        val extras = FragmentNavigatorExtras(
-            view to getString(R.string.transition_movie_details)
-        )
-
+    private fun navigateToMovieDetails(movie: MoviePoster) {
         val direction = NavMainDirections.toMovieDetailsFragment(movieId = movie.id)
-        findNavController().navigate(direction, extras)
+        findNavController().navigate(direction)
     }
 
     override fun onDestroyView() {
