@@ -101,6 +101,4 @@ dependencies {
     implementation 'androidx.startup:startup-runtime:1.1.0'
 
     implementation 'io.noties.markwon:core:4.6.1'
-
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 }

@@ -24,8 +24,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="end"
                 android:adjustViewBounds="true"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="14dp"
+                android:padding="14dp"
                 tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_heart_outlined" />
         </com.google.android.material.appbar.MaterialToolbar>

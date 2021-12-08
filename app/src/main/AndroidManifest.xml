@@ -29,10 +29,6 @@
             android:exported="false">
 
             <meta-data
-                android:name="com.insiderser.popularmovies.init.StrictModeInitializer"
-                android:value="androidx.startup" />
-
-            <meta-data
                 android:name="com.insiderser.popularmovies.init.TimberInitializer"
                 android:value="androidx.startup" />
 
