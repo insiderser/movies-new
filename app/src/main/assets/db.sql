@@ -57,18 +57,3 @@ CREATE INDEX MovieProductionCompaniesMovieIdIndex ON MovieProductionCompanies (m
 CREATE INDEX MovieProductionCompaniesIdIndex ON MovieProductionCompanies (productionCompanyId);
 CREATE INDEX ReviewsMovieIdIndex ON Reviews (movieId);
 CREATE INDEX PopularMoviesListMovieIdIndex ON PopularMoviesList (movieId);
-
-CREATE VIEW PopularMovies AS
-SELECT Movies.*, PML.position
-FROM Movies
-         JOIN PopularMoviesList PML ON Movies.id = PML.movieId;
-
-CREATE VIEW GenresByMovie AS
-SELECT Genres.*, MG.movieId
-FROM Genres
-         JOIN MovieGenres MG ON Genres.id = MG.genreId;
-
-CREATE VIEW ProductionCompaniesByMovie AS
-SELECT ProductionCompanies.*, MPC.movieId
-FROM ProductionCompanies
-         JOIN MovieProductionCompanies MPC ON ProductionCompanies.id = MPC.productionCompanyId;
