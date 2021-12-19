@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.FragmentReviewsBinding
 import com.insiderser.popularmovies.model.Review
+import com.insiderser.popularmovies.util.EventStatus
+import com.insiderser.popularmovies.util.Status
 import com.insiderser.popularmovies.util.collectWithLifecycle
+import com.insiderser.popularmovies.util.showErrorSnackbar
 import com.insiderser.popularmovies.util.viewLifecycleScoped
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
@@ -42,11 +46,22 @@ class ReviewsFragment : Fragment() {
         binding.reviewsList.adapter = reviewsAdapter
 
         viewModel.reviews.collectWithLifecycle(viewLifecycleOwner) { handleReviews(it) }
+        viewModel.reviewsStatus.collectWithLifecycle(viewLifecycleOwner) { handleReviewsStatus(it) }
     }
 
     private fun handleReviews(reviews: List<Review>) {
         reviewsAdapter.submitList(reviews)
         binding.noReviewsContainer.root.isVisible = reviews.isEmpty()
         binding.reviewsList.isVisible = reviews.isNotEmpty()
+    }
+
+    private fun handleReviewsStatus(status: EventStatus) {
+        when (status) {
+            is Status.Failure -> {
+                binding.root.showErrorSnackbar(R.string.failed_to_load) { viewModel.refresh() }
+            }
+            else -> {
+            }
+        }
     }
 }

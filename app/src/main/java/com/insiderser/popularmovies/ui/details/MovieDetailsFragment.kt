@@ -16,9 +16,12 @@ import com.insiderser.popularmovies.model.Genre
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.model.MovieBasicInfo
 import com.insiderser.popularmovies.ui.list.horizontal.HorizontalMoviesListAdapter
+import com.insiderser.popularmovies.util.EventStatus
+import com.insiderser.popularmovies.util.Status
 import com.insiderser.popularmovies.util.collectWithLifecycle
 import com.insiderser.popularmovies.util.format
 import com.insiderser.popularmovies.util.loadPoster
+import com.insiderser.popularmovies.util.showErrorSnackbar
 import com.insiderser.popularmovies.util.viewLifecycleScoped
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
@@ -54,6 +57,7 @@ class MovieDetailsFragment : Fragment() {
         initSimilar()
 
         viewModel.movieDetails.collectWithLifecycle(viewLifecycleOwner) { bindMovie(it) }
+        viewModel.movieDetailsStatus.collectWithLifecycle(viewLifecycleOwner) { handleMovieStatus(it) }
     }
 
     private fun initToolbar() {
@@ -101,6 +105,16 @@ class MovieDetailsFragment : Fragment() {
     private fun bindSimilar(similar: List<MovieBasicInfo>) {
         similarAdapter.submitList(similar)
         binding.similarMoviesHeader.isVisible = similar.isNotEmpty()
+    }
+
+    private fun handleMovieStatus(status: EventStatus) {
+        when (status) {
+            is Status.Failure -> {
+                binding.root.showErrorSnackbar(R.string.failed_to_load) { viewModel.refresh() }
+            }
+            else -> {
+            }
+        }
     }
 
     private fun navigateToReviews() {
