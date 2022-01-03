@@ -15,7 +15,7 @@ interface PopularMoviesListDao {
         """
         SELECT movies.*
         FROM popularMoviesList
-                JOIN movies ON popularMoviesList.movieId = movies.id
+                INNER JOIN movies ON popularMoviesList.movieId = movies.id
         ORDER BY position
     """
     )

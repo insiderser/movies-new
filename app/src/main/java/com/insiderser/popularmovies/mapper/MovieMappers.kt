@@ -9,45 +9,51 @@ import com.insiderser.popularmovies.model.MovieBasicInfo
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovie
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovieDetails
 import com.insiderser.popularmovies.rest.tmdb.model.TmdbMovies
+import timber.log.Timber
 
 fun movieMapper(
     movie: MovieEntity,
     genres: List<Genre>,
     isFavorite: Boolean,
     similarMovies: List<MovieEntity>,
-) = Movie(
-    id = movie.id,
-    title = movie.title,
-    overview = movie.overview,
-    posterPath = movie.posterPath,
-    backdropPath = movie.backdropPath,
-    voteAverage = movie.voteAverage,
-    isFavorite = isFavorite,
-    genres = genres,
-    similar = similarMovies.map(movieBasicInfoMapper),
-)
-
-val tmdbMoviesToMovieEntitiesMapper = Mapper.build<TmdbMovies, List<MovieEntity>> {
-    results.mapNotNull(tmdbMovieToMovieEntityMapper)
+): Movie? {
+    return Movie(
+        id = movie.id,
+        title = movie.title,
+        overview = movie.overview,
+        posterPath = movie.posterPath ?: run {
+            Timber.w("Movie ${movie.title} has posterPath=null. Removing it...")
+            return null
+        },
+        backdropPath = movie.backdropPath,
+        voteAverage = movie.voteAverage,
+        isFavorite = isFavorite,
+        genres = genres,
+        similar = similarMovies.mapNotNull(movieBasicInfoMapper),
+    )
 }
 
-val tmdbMovieToMovieEntityMapper = Mapper.build<TmdbMovie, MovieEntity?> {
+val tmdbMoviesToMovieEntitiesMapper = Mapper.build<TmdbMovies, List<MovieEntity>> {
+    results.map(tmdbMovieToMovieEntityMapper)
+}
+
+val tmdbMovieToMovieEntityMapper = Mapper.build<TmdbMovie, MovieEntity> {
     MovieEntity(
         id = id,
         title = title,
         overview = overview,
-        posterPath = poster_path ?: return@build null,
+        posterPath = poster_path,
         backdropPath = backdrop_path,
         voteAverage = vote_average
     )
 }
 
-val tmdbDetailsToMovieEntityMapper = Mapper.build<TmdbMovieDetails, MovieEntity?> {
+val tmdbDetailsToMovieEntityMapper = Mapper.build<TmdbMovieDetails, MovieEntity> {
     MovieEntity(
         id = id,
         title = title,
         overview = overview,
-        posterPath = poster_path ?: return@build null,
+        posterPath = poster_path,
         backdropPath = backdrop_path,
         voteAverage = vote_average
     )
@@ -62,11 +68,14 @@ fun popularListEntityMapper(startPosition: Int) = Mapper.build<List<MovieEntity>
     }
 }
 
-val movieBasicInfoMapper = Mapper.build<MovieEntity, MovieBasicInfo> {
+val movieBasicInfoMapper = Mapper.build<MovieEntity, MovieBasicInfo?> {
     MovieBasicInfo(
         id = id,
         title = title,
-        posterPath = posterPath,
+        posterPath = posterPath ?: run {
+            Timber.w("Movie $title has posterPath=null. Removing it...")
+            return@build null
+        },
     )
 }
 
@@ -78,7 +87,10 @@ val tmdbMovieToBasicInfoMapper = Mapper.build<TmdbMovie, MovieBasicInfo?> {
     MovieBasicInfo(
         id = id,
         title = title,
-        posterPath = poster_path ?: return@build null,
+        posterPath = poster_path ?: run {
+            Timber.d("Got movie $title with posterPath=null")
+            return@build null
+        },
     )
 }
 

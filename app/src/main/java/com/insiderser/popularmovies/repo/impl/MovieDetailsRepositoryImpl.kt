@@ -17,6 +17,7 @@ import com.insiderser.popularmovies.repo.MovieDetailsRepository
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import javax.inject.Inject
 
 class MovieDetailsRepositoryImpl @Inject constructor(
@@ -40,13 +41,13 @@ class MovieDetailsRepositoryImpl @Inject constructor(
             isMovieInFavorites,
             similarMovies,
             ::movieMapper
-        )
+        ).filterNotNull()
     }
 
     override suspend fun loadMovieDetails(movieId: Int) {
         val movieDetails = moviesService.getMovieDetails(movieId)
 
-        val movieEntity = tmdbDetailsToMovieEntityMapper(movieDetails) ?: return
+        val movieEntity = tmdbDetailsToMovieEntityMapper(movieDetails)
 
         val genreEntities = movieDetails.genres.map(tmdbToGenreEntityMapper)
         val movieGenreEntities = genreEntities.map(movieGenreMapper(movieId))

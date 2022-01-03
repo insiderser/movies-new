@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.insiderser.popularmovies.db.dao.FavoriteMoviesDao
 import com.insiderser.popularmovies.db.entity.FavoriteMovieEntity
-import com.insiderser.popularmovies.mapper.asPagingListMapper
+import com.insiderser.popularmovies.mapper.asPagingListMapperNotNull
 import com.insiderser.popularmovies.mapper.movieBasicInfoMapper
 import com.insiderser.popularmovies.model.Movie
 import com.insiderser.popularmovies.model.MovieBasicInfo
@@ -23,7 +23,7 @@ class FavoriteMoviesRepositoryImpl @Inject constructor(
             config = pagingConfig,
             pagingSourceFactory = { favoriteMoviesDao.findAllMovies() }
         )
-        return pager.flow.map { movieBasicInfoMapper.asPagingListMapper().invoke(it) }
+        return pager.flow.map { movieBasicInfoMapper.asPagingListMapperNotNull().invoke(it) }
     }
 
     override fun hasAnyFavorite(): Flow<Boolean> = favoriteMoviesDao.hasAnyFavorite()

@@ -16,7 +16,7 @@ interface GenresDao {
         """
         SELECT genres.id, genres.name
         FROM genres
-                 JOIN movieGenres mg ON genres.id = mg.genreId
+                 INNER JOIN movieGenres mg ON genres.id = mg.genreId
         WHERE movieId = :movieId
     """
     )

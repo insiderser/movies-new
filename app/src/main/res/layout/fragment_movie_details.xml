@@ -30,52 +30,70 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false">
+        android:layout_weight="1">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:clipToPadding="false">
 
-            <include
-                android:id="@+id/hero"
-                layout="@layout/content_details_movie_hero"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginBottom="40dp"
+                android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/reviewsBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="24dp"
-                android:text="@string/reviews" />
+                <include
+                    android:id="@+id/hero"
+                    layout="@layout/content_details_movie_hero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp" />
 
-            <TextView
-                android:id="@+id/similarMoviesHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:text="@string/similar_movies"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="24dp"
+                    android:ellipsize="end"
+                    android:maxLines="@integer/description_collapsed_max_lines"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    tools:text="Twelve years after exploring Pandora and joining the Na’vi, Jake Sully has since raised a family with Neytiri and established himself within the clans of the new world. Of course, peace can only last so long. Especially when the military organization from the original film returns to “finish what they started”." />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/similarMoviesList"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie_horizontal" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reviewsBtn"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="24dp"
+                    android:text="@string/reviews" />
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/similarMoviesHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:text="@string/similar_movies"
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/similarMoviesList"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_movie_horizontal" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

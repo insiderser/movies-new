@@ -31,23 +31,27 @@ class MoviesRemoteMediator @Inject constructor(
             LoadType.APPEND -> popularMoviesListDao.getLastInsertedPosition()!! + 1
             LoadType.PREPEND -> {
                 val firstInsertedPosition = popularMoviesListDao.getFirstInsertedPosition()!!
-                if (firstInsertedPosition == 0) {
+                if (firstInsertedPosition <= 0) {
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }
-                firstInsertedPosition - 1
+                firstInsertedPosition - TmdbConfig.PAGE_SIZE
             }
         }
         val pageToLoad = getPageForPosition(positionToLoad)
 
+        Timber.d("Loading $loadType position=$positionToLoad page=$pageToLoad")
+
         val loadedMovies = try {
             moviesService.getPopularMovies(page = pageToLoad)
         } catch (e: Exception) {
-            Timber.e(e)
+            Timber.e(e, "Failure loading popular movies at position $positionToLoad")
             return MediatorResult.Error(e)
         }
 
         val entities = tmdbMoviesToMovieEntitiesMapper(loadedMovies)
-        val entitiesByPosition = popularListEntityMapper(positionToLoad).invoke(entities)
+        val entitiesByPosition = popularListEntityMapper(getFirstPositionForPage(pageToLoad)).invoke(entities)
+
+        Timber.d("Got ${loadedMovies.results.size} movies. First position: ${entitiesByPosition.firstOrNull()?.position}. Last position: ${entitiesByPosition.lastOrNull()?.position}")
 
         db.withTransaction {
             if (loadType == LoadType.REFRESH) {
@@ -59,9 +63,10 @@ class MoviesRemoteMediator @Inject constructor(
         }
 
         return MediatorResult.Success(
-            endOfPaginationReached = false
+            endOfPaginationReached = entities.size < TmdbConfig.PAGE_SIZE
         )
     }
 
     private fun getPageForPosition(position: Int): Int = position / TmdbConfig.PAGE_SIZE + 1
+    private fun getFirstPositionForPage(page: Int): Int = (page - 1) * TmdbConfig.PAGE_SIZE
 }

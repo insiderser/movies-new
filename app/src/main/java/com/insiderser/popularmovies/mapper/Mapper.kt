@@ -2,6 +2,7 @@ package com.insiderser.popularmovies.mapper
 
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.insiderser.popularmovies.util.mapNotNull
 
 interface Mapper<From, To> : (From) -> To {
     override operator fun invoke(from: From): To
@@ -18,3 +19,6 @@ fun <From, To> Mapper<From, To>.asListMapper(): Mapper<List<From>, List<To>> =
 
 fun <From : Any, To : Any> Mapper<From, To>.asPagingListMapper(): Mapper<PagingData<From>, PagingData<To>> =
     Mapper.build { map { invoke(it) } }
+
+fun <From : Any, To : Any> Mapper<From, To?>.asPagingListMapperNotNull(): Mapper<PagingData<From>, PagingData<To>> =
+    Mapper.build { mapNotNull { invoke(it) } }

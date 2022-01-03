@@ -14,10 +14,10 @@ interface SimilarMoviesDao {
     @Query(
         """
             SELECT movies.*
-            FROM similarMovies
-                    JOIN movies ON similarMovieId = movies.id
-            WHERE parentMovieId = :movieId
-            ORDER BY position ASC
+            FROM similarMovies similar
+                    INNER JOIN movies ON similar.similarMovieId = movies.id
+            WHERE similar.parentMovieId = :movieId
+            ORDER BY similar.position ASC
         """
     )
     fun getSimilarMoviesForMovie(movieId: Int): Flow<List<MovieEntity>>

@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.insiderser.popularmovies.R
 import com.insiderser.popularmovies.databinding.FragmentReviewsBinding
 import com.insiderser.popularmovies.model.Review
-import com.insiderser.popularmovies.util.EventStatus
-import com.insiderser.popularmovies.util.Status
+import com.insiderser.popularmovies.util.UserMessage
 import com.insiderser.popularmovies.util.collectWithLifecycle
 import com.insiderser.popularmovies.util.showErrorSnackbar
 import com.insiderser.popularmovies.util.viewLifecycleScoped
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 
 @AndroidEntryPoint
 class ReviewsFragment : Fragment() {
@@ -40,13 +41,29 @@ class ReviewsFragment : Fragment() {
 
         binding.reviewsAppBar.applySystemWindowInsetsToPadding(top = true)
         binding.reviewsToolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.refresh() }
 
         reviewsAdapter = ReviewsAdapter()
         binding.reviewsList.applySystemWindowInsetsToPadding(bottom = true)
         binding.reviewsList.adapter = reviewsAdapter
 
-        viewModel.reviews.collectWithLifecycle(viewLifecycleOwner) { handleReviews(it) }
-        viewModel.reviewsStatus.collectWithLifecycle(viewLifecycleOwner) { handleReviewsStatus(it) }
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.state
+            .map { it.reviews }
+            .collectWithLifecycle(viewLifecycleOwner) { handleReviews(it) }
+
+        viewModel.state
+            .map { it.isLoading }
+            .distinctUntilChanged()
+            .collectWithLifecycle(viewLifecycleOwner) { binding.swipeRefreshLayout.isRefreshing = it }
+
+        viewModel.state
+            .map { it.messages.firstOrNull() }
+            .filterNotNull()
+            .collectWithLifecycle(viewLifecycleOwner) { showMessage(it) }
     }
 
     private fun handleReviews(reviews: List<Review>) {
@@ -55,13 +72,8 @@ class ReviewsFragment : Fragment() {
         binding.reviewsList.isVisible = reviews.isNotEmpty()
     }
 
-    private fun handleReviewsStatus(status: EventStatus) {
-        when (status) {
-            is Status.Failure -> {
-                binding.root.showErrorSnackbar(R.string.failed_to_load) { viewModel.refresh() }
-            }
-            else -> {
-            }
-        }
+    private fun showMessage(message: UserMessage) {
+        binding.root.showErrorSnackbar(message.message, message.retry)
+        viewModel.onMessageShown(message)
     }
 }
