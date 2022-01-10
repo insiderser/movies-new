@@ -17,7 +17,7 @@
     <string name="search_not_found_explanation">No movies found\nthat match your query</string>
     <string name="search_your_favorite_movies">Search Your Favorite Movies</string>
     <string name="search_no_query_explanation">Enter a part of the movie\'s title\nyou\'re trying to find</string>
-    <string name="movie_name">Movie name</string>
+    <string name="movie_name">Movie title</string>
     <string name="back">Back</string>
     <string name="clear">Clear</string>
     <string name="similar_movies">Similar Movies</string>

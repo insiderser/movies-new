@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Популярні Фільми</string>
+    <string name="retry">Спробувати знову</string>
+    <string name="failed_to_load">Не вдалося завантажити</string>
+    <string name="reviews">Відгуки</string>
+    <string name="review_author">Відгук від %s</string>
+    <string name="favorites">Обрані</string>
+    <string name="add_to_favorites">Додати до Обраних</string>
+    <string name="remove_from_favorites">Видалити з Обраних</string>
+    <string name="no_favorites">Немає Обраних</string>
+    <string name="no_favorites_explanation">Додавайте фільми в обрані\nклікнувши на 🤎 іконку</string>
+    <string name="no_reviews">Немає Відгуків</string>
+    <string name="no_reviews_explanation">Виглядає ніби цей фільм\nще не отримав відгуків</string>
+    <string name="search">Пошук</string>
+    <string name="not_found">Не Знайдено</string>
+    <string name="search_not_found_explanation">Не знайдено фільмів,\nякі б задовільнили ваш запит</string>
+    <string name="poster_of_the_movie">Постер фільму</string>
+    <string name="search_your_favorite_movies">Шукайте Ваші Улюблені Фільми</string>
+    <string name="search_no_query_explanation">Введіть частину назви фільму,\nякий ви збираєтесь знайти</string>
+    <string name="movie_name">Назва фільму</string>
+    <string name="back">Назад</string>
+    <string name="clear">Очистити</string>
+    <string name="similar_movies">Схожі Фільми</string>
+</resources>
