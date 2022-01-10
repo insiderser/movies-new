@@ -5,6 +5,7 @@ import com.insiderser.popularmovies.rest.tmdb.GenresService
 import com.insiderser.popularmovies.rest.tmdb.MoviesService
 import com.insiderser.popularmovies.rest.tmdb.SearchService
 import com.insiderser.popularmovies.rest.tmdb.TmdbApiKeyInterceptor
+import com.insiderser.popularmovies.rest.tmdb.TmdbLocaleInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -45,11 +46,17 @@ object RestModule {
     @Tmdb
     fun provideTmdbOkHttpClient(
         apiKeyInterceptor: TmdbApiKeyInterceptor,
+        localeInterceptor: TmdbLocaleInterceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(apiKeyInterceptor)
-            .addInterceptor(loggingInterceptor)
+            .addInterceptor(localeInterceptor)
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(loggingInterceptor)
+                }
+            }
             .build()
 
     @Provides
